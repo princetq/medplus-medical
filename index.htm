@@ -21,7 +21,7 @@ body:not(.mpt-auth-ok) #SB,body:not(.mpt-auth-ok) #MAIN,body:not(.mpt-auth-ok) #
 <script src="https://js.sentry-cdn.com/f7366affbaae7cdea59eb5a0be422a55.min.js" crossorigin="anonymous"></script>
 <script>if(typeof Sentry!=="undefined"){Sentry.onLoad(function(){Sentry.init({ignoreErrors:["ResizeObserver loop","top.GLOBALS",/extension\//i,/^chrome-extension:\/\//i,/^moz-extension:\/\//i,"The message port closed before a response was received","Lazy Scholar"],denyUrls:[/extensions\//i,/^chrome-extension:\/\//i,/^moz-extension:\/\//i]})})}else{console.info("[Sentry] Không tải được (có thể do ad-blocker) — app vẫn hoạt động bình thường.")}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="mpt-build" content="R11.2.7-druginfo-runtime-fix">
+<meta name="mpt-build" content="R11.2.10-mobile-bottom-favorites">
 <meta name="theme-color" content="#0B5F42">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -6990,5 +6990,111 @@ window.MedPlusGlobalSearch={open:openSearch,rebuild:function(){searchIndex=null;
 
 
 <script id="MPT-R11-2-6-INJECT-COUNT">(function(){function u(){var n=(window.INJECT_DB&&window.INJECT_DB.length)||0;document.querySelectorAll('[data-inject-count]').forEach(function(el){el.textContent=String(n)})}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',u,{once:true});else u()})();</script>
+
+<style id="MPT-R11-2-10-MOBILE-BOTTOM-CSS">
+/* R11.2.10: mobile bottom navigation + per-user favourites. Existing semantic status colours are untouched. */
+#mpt-mobile-bottom,#mpt-mobile-drawer-backdrop{display:none}
+.mpt-fav-toggle{display:none}
+@media(max-width:768px){
+  body.mpt-auth-ok #mpt-mobile-bottom{display:grid}
+  #mpt-mobile-bottom{position:fixed;left:0;right:0;bottom:0;z-index:100250;grid-template-columns:repeat(5,minmax(0,1fr));height:calc(68px + env(safe-area-inset-bottom));padding:5px 6px env(safe-area-inset-bottom);background:rgba(255,255,255,.97);border-top:1px solid var(--BOR);box-shadow:0 -8px 28px rgba(11,95,66,.10);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+  .mpt-bottom-btn{appearance:none;border:0;background:transparent;color:#789087;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;padding:3px 1px;border-radius:12px;font-family:inherit;font-size:10.5px;font-weight:750;line-height:1.1;position:relative;cursor:pointer}
+  .mpt-bottom-btn svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+  .mpt-bottom-btn.active{color:var(--PD);background:rgba(22,135,91,.07)}
+  .mpt-bottom-btn:active{background:rgba(22,135,91,.11)}
+  .mpt-bottom-badge{position:absolute;top:0;left:calc(50% + 8px);min-width:16px;height:16px;padding:0 4px;border-radius:999px;background:var(--ACC);color:var(--P-TXT);font-size:9px;font-weight:850;display:none;align-items:center;justify-content:center;border:2px solid #fff}
+  .mpt-bottom-badge.show{display:flex}
+  #CNT{padding-bottom:calc(92px + env(safe-area-inset-bottom))!important}
+  #mpt-global-search{bottom:calc(68px + env(safe-area-inset-bottom))!important}
+  #MB-btn,#mpt-search-btn,#mpt-user-chip,#mpt-admin-btn,#mpt-logout-btn{display:none!important}
+  #TB{padding-left:15px;padding-right:12px;min-height:58px}
+  #TB .tb-acts{gap:6px}
+  #TB .mpt-print-btn{width:42px;height:42px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:11px}
+  .mpt-fav-toggle{position:absolute;right:10px;top:10px;z-index:4;width:34px;height:34px;border:1px solid var(--BOR);border-radius:50%;background:rgba(255,255,255,.96);color:#6F877D;display:flex;align-items:center;justify-content:center;padding:0;box-shadow:0 2px 8px rgba(11,95,66,.08);cursor:pointer}
+  .mpt-fav-toggle svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+  .mpt-fav-toggle.saved{color:var(--PD);border-color:#A9D6C1;background:#EAF7F0}
+  .mpt-fav-toggle.saved svg{fill:currentColor}
+  .mod-card.mpt-has-fav .mc-cnt{right:52px}
+  #mpt-mobile-drawer-backdrop{position:fixed;inset:0 0 calc(68px + env(safe-area-inset-bottom)) 0;z-index:100300;background:rgba(12,36,27,.44);align-items:flex-end;justify-content:center;padding:0;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+  body.mpt-auth-ok #mpt-mobile-drawer-backdrop.open{display:flex}
+  #mpt-mobile-drawer{width:100%;max-height:min(76vh,680px);background:#fff;border-radius:22px 22px 0 0;box-shadow:0 -18px 54px rgba(8,53,37,.18);display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom);animation:mptDrawerUp .2s ease-out}
+  @keyframes mptDrawerUp{from{transform:translateY(18px);opacity:.5}to{transform:none;opacity:1}}
+  .mpt-drawer-h{display:flex;align-items:center;gap:10px;padding:16px 17px 12px;border-bottom:1px solid var(--BOR)}
+  .mpt-drawer-title{flex:1;font-size:19px;font-weight:850;color:var(--PD)}
+  .mpt-drawer-close{width:36px;height:36px;border:0;border-radius:50%;background:var(--BG);color:var(--T2);font-size:24px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .mpt-drawer-body{padding:13px 14px 16px;overflow:auto;-webkit-overflow-scrolling:touch}
+  .mpt-drawer-empty{padding:26px 18px;text-align:center;color:var(--TM);font-size:14.5px;line-height:1.6}
+  .mpt-fav-list{display:flex;flex-direction:column;gap:9px}
+  .mpt-fav-row{border:1px solid var(--BOR);border-radius:14px;background:#fff;display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 10px 10px 11px}
+  .mpt-fav-row-ico{width:42px;height:42px;border-radius:11px;background:#EDF7F2;display:flex;align-items:center;justify-content:center;font-size:21px;color:var(--PD);overflow:hidden}
+  .mpt-fav-row-ico svg{width:24px;height:24px}
+  .mpt-fav-row-name{font-size:15px;font-weight:800;color:var(--PD);line-height:1.25}
+  .mpt-fav-row-group{font-size:12.5px;color:var(--TM);margin-top:2px;line-height:1.3}
+  .mpt-fav-row-actions{display:flex;align-items:center;gap:4px}
+  .mpt-fav-open,.mpt-fav-remove{border:0;border-radius:9px;background:var(--BG);color:var(--PD);font-family:inherit;font-weight:800;cursor:pointer}
+  .mpt-fav-open{padding:9px 10px;font-size:13px}
+  .mpt-fav-remove{width:36px;height:36px;display:flex;align-items:center;justify-content:center;padding:0}
+  .mpt-fav-remove svg{width:17px;height:17px;fill:currentColor;stroke:currentColor}
+  .mpt-account-card{border:1px solid var(--BOR);border-radius:16px;padding:15px;background:linear-gradient(145deg,#fff,#F5FBF8)}
+  .mpt-account-name{font-size:18px;font-weight:850;color:var(--PD);line-height:1.25}
+  .mpt-account-email{font-size:14px;color:var(--T2);margin-top:4px;overflow-wrap:anywhere}
+  .mpt-account-meta{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
+  .mpt-account-pill{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;background:#EAF6F0;color:var(--PD);font-size:12px;font-weight:800}
+  .mpt-account-actions{display:grid;gap:9px;margin-top:12px}
+  .mpt-account-action{min-height:46px;border:1px solid var(--BOR);border-radius:11px;background:#fff;color:var(--PD);font:750 14.5px/1.2 inherit;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
+  .mpt-account-action.primary{background:var(--PD);color:#fff;border-color:var(--PD)}
+  .mpt-account-action.danger{color:var(--R-TXT);border-color:#F2C7C3;background:#FFF8F7}
+}
+@media(max-width:390px){
+  .mpt-bottom-btn{font-size:9.8px}.mpt-bottom-btn svg{width:22px;height:22px}
+  .mpt-fav-row{grid-template-columns:40px minmax(0,1fr) auto}.mpt-fav-row-ico{width:38px;height:38px}.mpt-fav-open{padding:8px;font-size:12px}
+}
+</style>
+
+<nav id="mpt-mobile-bottom" aria-label="Điều hướng nhanh trên điện thoại">
+  <button class="mpt-bottom-btn active" type="button" data-mpt-bottom="home" aria-label="Trang chủ"><svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M9.5 20v-6h5v6"/></svg><span>Trang chủ</span></button>
+  <button class="mpt-bottom-btn" type="button" data-mpt-bottom="categories" aria-label="Danh mục"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg><span>Danh mục</span></button>
+  <button class="mpt-bottom-btn" type="button" data-mpt-bottom="search" aria-label="Tra cứu"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg><span>Tra cứu</span></button>
+  <button class="mpt-bottom-btn" type="button" data-mpt-bottom="favorites" aria-label="Đã lưu"><svg viewBox="0 0 24 24"><path d="M6 3.5h12v17L12 17l-6 3.5Z"/></svg><span>Đã lưu</span><span class="mpt-bottom-badge" id="mpt-fav-count">0</span></button>
+  <button class="mpt-bottom-btn" type="button" data-mpt-bottom="account" aria-label="Tài khoản"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 21c.7-4.2 3.2-6.3 7.5-6.3s6.8 2.1 7.5 6.3"/></svg><span>Tài khoản</span></button>
+</nav>
+<div id="mpt-mobile-drawer-backdrop" aria-hidden="true">
+  <section id="mpt-mobile-drawer" role="dialog" aria-modal="true" aria-labelledby="mpt-mobile-drawer-title">
+    <div class="mpt-drawer-h"><div class="mpt-drawer-title" id="mpt-mobile-drawer-title">Đã lưu</div><button class="mpt-drawer-close" id="mpt-mobile-drawer-close" type="button" aria-label="Đóng">×</button></div>
+    <div class="mpt-drawer-body" id="mpt-mobile-drawer-body"></div>
+  </section>
+</div>
+
+<script id="MPT-R11-2-10-MOBILE-BOTTOM-RUNTIME">
+(function(){'use strict';
+var FAV_PREFIX='MPT_FAVORITES_V1:';
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function sessionUser(){return (window.__MPT_AUTH_SESSION__&&window.__MPT_AUTH_SESSION__.user)||window.__MEDPLUS_USER__||null}
+function favKey(){var u=sessionUser(),email=u&&u.email?String(u.email).toLowerCase():'anonymous';return FAV_PREFIX+email}
+function loadFavs(){try{var a=JSON.parse(localStorage.getItem(favKey())||'[]');return Array.isArray(a)?Array.from(new Set(a.filter(Boolean))):[]}catch(e){return[]}}
+function saveFavs(a){try{localStorage.setItem(favKey(),JSON.stringify(Array.from(new Set(a))))}catch(e){}}
+function allowed(id){return !window.MPTAccess||typeof window.MPTAccess.can!=='function'||window.MPTAccess.can(id)}
+function cardId(card){var oc=card.getAttribute('onclick')||'',m=oc.match(/showPg\(['"]([^'"]+)/);if(m)return m[1];var t=(card.getAttribute('data-mpt-tools')||'').trim().split(/\s+/);return t.length===1?t[0]:''}
+function navMeta(id){var nav=document.querySelector('.ni[data-pg="'+CSS.escape(id)+'"]'),label=id,group='MedPlus',icon='🩺';if(nav){var c=nav.cloneNode(true);c.querySelectorAll('.ni-ico,.ni-badge').forEach(function(x){x.remove()});label=c.textContent.replace(/\s+/g,' ').trim()||id;var ic=nav.querySelector('.ni-ico');if(ic&&ic.textContent.trim())icon=ic.textContent.trim();var p=nav.previousElementSibling;while(p&&!p.classList.contains('nav-lbl'))p=p.previousElementSibling;if(p)group=p.textContent.replace(/\s+/g,' ').trim()||group}var card=document.querySelector('#pg-home .mod-card[onclick*="showPg(\''+id+'\')"],#pg-home .mod-card[onclick*="showPg(&quot;'+id+'&quot;)"]');if(!card){document.querySelectorAll('#pg-home .mod-card').forEach(function(x){if(!card&&cardId(x)===id)card=x})}var iconHtml='';if(card){var i=card.querySelector('.mc-ico');if(i)iconHtml=i.innerHTML;var n=card.querySelector('.mc-name');if(n)label=n.textContent.trim()||label}return{id:id,label:label,group:group,icon:icon,iconHtml:iconHtml}}
+function updateFavCount(){var n=loadFavs().filter(allowed).length,b=$('mpt-fav-count');if(!b)return;b.textContent=n;b.classList.toggle('show',n>0)}
+function updateFavButtons(){var set=new Set(loadFavs());document.querySelectorAll('.mpt-fav-toggle[data-fav-id]').forEach(function(b){var on=set.has(b.dataset.favId);b.classList.toggle('saved',on);b.setAttribute('aria-pressed',on?'true':'false');b.title=on?'Bỏ khỏi Đã lưu':'Lưu công cụ hay dùng'}) ;updateFavCount()}
+function toggleFav(id){var a=loadFavs(),i=a.indexOf(id);if(i>=0)a.splice(i,1);else a.push(id);saveFavs(a);updateFavButtons();var back=$('mpt-mobile-drawer-backdrop');if(back&&back.classList.contains('open')&&back.dataset.kind==='favorites')renderFavorites()}
+function decorateCards(){document.querySelectorAll('#pg-home .mod-card').forEach(function(card){var id=cardId(card);if(!id||card.querySelector('.mpt-fav-toggle'))return;card.classList.add('mpt-has-fav');var b=document.createElement('button');b.type='button';b.className='mpt-fav-toggle';b.dataset.favId=id;b.setAttribute('aria-label','Lưu công cụ hay dùng');b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h12v17L12 17l-6 3.5Z"/></svg>';b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleFav(id)});card.appendChild(b)});updateFavButtons()}
+function setBottomActive(kind){document.querySelectorAll('[data-mpt-bottom]').forEach(function(b){b.classList.toggle('active',b.dataset.mptBottom===kind)})}
+function closeDrawer(){var b=$('mpt-mobile-drawer-backdrop');if(!b)return;b.classList.remove('open');b.setAttribute('aria-hidden','true');b.dataset.kind='';document.body.style.overflow='';syncPageActive()}
+function openDrawer(kind){var b=$('mpt-mobile-drawer-backdrop');if(!b)return;b.dataset.kind=kind;$('mpt-mobile-drawer-title').textContent=kind==='favorites'?'Công cụ đã lưu':'Tài khoản';if(kind==='favorites')renderFavorites();else renderAccount();b.classList.add('open');b.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';setBottomActive(kind)}
+function renderFavorites(){var body=$('mpt-mobile-drawer-body'),ids=loadFavs().filter(allowed);if(!body)return;if(!ids.length){body.innerHTML='<div class="mpt-drawer-empty"><b>Chưa có công cụ nào được lưu.</b><br>Ở Trang chủ, chạm biểu tượng dấu trang ở góc mỗi công cụ để thêm vào danh sách hay dùng.</div>';updateFavCount();return}body.innerHTML='<div class="mpt-fav-list">'+ids.map(function(id){var m=navMeta(id),ico=m.iconHtml||esc(m.icon);return '<div class="mpt-fav-row" data-fav-row="'+esc(id)+'"><div class="mpt-fav-row-ico">'+ico+'</div><div><div class="mpt-fav-row-name">'+esc(m.label)+'</div><div class="mpt-fav-row-group">'+esc(m.group)+'</div></div><div class="mpt-fav-row-actions"><button class="mpt-fav-open" type="button" data-fav-open="'+esc(id)+'">Mở</button><button class="mpt-fav-remove" type="button" data-fav-remove="'+esc(id)+'" aria-label="Bỏ khỏi Đã lưu" title="Bỏ khỏi Đã lưu"><svg viewBox="0 0 24 24"><path d="M6 3.5h12v17L12 17l-6 3.5Z"/></svg></button></div></div>'}).join('')+'</div>';body.querySelectorAll('[data-fav-open]').forEach(function(b){b.onclick=function(){var id=b.dataset.favOpen;closeDrawer();if(typeof window.showPg==='function')window.showPg(id)}});body.querySelectorAll('[data-fav-remove]').forEach(function(b){b.onclick=function(){toggleFav(b.dataset.favRemove)}});updateFavCount()}
+function renderAccount(){var body=$('mpt-mobile-drawer-body'),s=window.__MPT_AUTH_SESSION__||{},u=s.user||window.__MEDPLUS_USER__||{},tools=Array.isArray(s.allowedTools)?s.allowedTools:(Array.isArray(window.__MEDPLUS_ALLOWED_TOOLS__)?window.__MEDPLUS_ALLOWED_TOOLS__:[]),isAdmin=u.role==='admin',name=(u.name&&u.name!=='Quản trị MedPlus')?u.name:(u.email||'Tài khoản MedPlus');if(!body)return;body.innerHTML='<div class="mpt-account-card"><div class="mpt-account-name">'+esc(name)+'</div><div class="mpt-account-email">'+esc(u.email||'')+'</div><div class="mpt-account-meta"><span class="mpt-account-pill">'+(isAdmin?'Quản trị':'Người dùng')+'</span><span class="mpt-account-pill">'+tools.length+' công cụ được cấp quyền</span></div></div><div class="mpt-account-actions">'+(isAdmin?'<button class="mpt-account-action primary" type="button" data-account-action="admin">Mở trang quản trị</button>':'')+'<button class="mpt-account-action danger" type="button" data-account-action="logout">Đăng xuất</button></div>';var a=body.querySelector('[data-account-action="admin"]');if(a)a.onclick=function(){location.href='./admin.html'};var l=body.querySelector('[data-account-action="logout"]');if(l)l.onclick=function(){closeDrawer();var b=$('mpt-logout-btn');if(b)b.click()}}
+function syncPageActive(){var back=$('mpt-mobile-drawer-backdrop');if(back&&back.classList.contains('open'))return;var search=$('mpt-global-search');if(search&&search.classList.contains('open')){setBottomActive('search');return}var sb=$('SB');if(sb&&sb.classList.contains('open')){setBottomActive('categories');return}var p=document.querySelector('.pg.active[id^="pg-"]');setBottomActive(p&&p.id==='pg-home'?'home':'')}
+function closeSearchIfOpen(){var m=$('mpt-global-search');if(m&&m.classList.contains('open')){var x=$('mpt-global-search-close');if(x)x.click();else m.classList.remove('open')}}
+function bindBottom(){document.querySelectorAll('[data-mpt-bottom]').forEach(function(b){b.addEventListener('click',function(){var k=b.dataset.mptBottom;if(k!=='search')closeSearchIfOpen();if(k!=='categories'&&typeof window.closeSB==='function')window.closeSB();if(k==='home'){closeDrawer();if(typeof window.showPg==='function')window.showPg('home');setBottomActive('home')}else if(k==='categories'){closeDrawer();if(typeof window.openSB==='function')window.openSB();setBottomActive('categories')}else if(k==='search'){closeDrawer();if(typeof window.closeSB==='function')window.closeSB();var s=$('mpt-search-btn');if(s)s.click();setBottomActive('search')}else if(k==='favorites'){openDrawer('favorites')}else if(k==='account'){openDrawer('account')}})});var x=$('mpt-mobile-drawer-close'),back=$('mpt-mobile-drawer-backdrop');if(x)x.onclick=closeDrawer;if(back)back.addEventListener('click',function(e){if(e.target===back)closeDrawer()});var sb=$('SB'),search=$('mpt-global-search');if(sb)new MutationObserver(syncPageActive).observe(sb,{attributes:true,attributeFilter:['class']});if(search)new MutationObserver(syncPageActive).observe(search,{attributes:true,attributeFilter:['class']});var main=$('CNT');if(main)new MutationObserver(syncPageActive).observe(main,{subtree:true,attributes:true,attributeFilter:['class']})}
+function patchShowPg(){if(typeof window.showPg!=='function'||window.showPg.__mptBottomWrapped)return;var old=window.showPg;var wrapped=function(pg){var r=old.apply(this,arguments);if(r!==false){closeDrawer();setTimeout(syncPageActive,0)}return r};wrapped.__mptBottomWrapped=true;window.showPg=wrapped}
+function onAuthReady(){decorateCards();updateFavButtons();syncPageActive()}
+function init(){decorateCards();bindBottom();patchShowPg();syncPageActive();new MutationObserver(function(){if(document.body.classList.contains('mpt-auth-ok'))onAuthReady()}).observe(document.body,{attributes:true,attributeFilter:['class']});window.addEventListener('storage',function(e){if(e.key&&e.key.indexOf(FAV_PREFIX)===0)updateFavButtons()})}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();
+</script>
+
 </body>
 </html>
