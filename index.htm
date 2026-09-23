@@ -4269,30 +4269,81 @@ body:not(.mpt-auth-ok) #SB,body:not(.mpt-auth-ok) #MAIN,body:not(.mpt-auth-ok) #
 </div>
 </div>
 
+<style id="MPT-R11-2-20-GUIDE-UI-SYNC-STYLE">
+.mpt-guide-version-note{margin:0 0 14px;padding:11px 13px;border:1px solid #BFDCCB;border-radius:10px;background:#EFF9F3;color:var(--P-TXT);font-size:15px;line-height:1.6}
+.mpt-guide-access-card{margin:0 0 14px;padding:14px 15px;border:1px solid var(--BOR);border-radius:11px;background:#fff}
+.mpt-guide-access-title,.mpt-guide-device-title{font-size:16px;font-weight:800;color:var(--PD);margin-bottom:7px}
+.mpt-guide-access-card ol,.mpt-guide-device ol{padding-left:20px;color:var(--T2);font-size:15.5px;line-height:1.75}
+.mpt-guide-access-card li,.mpt-guide-device li{margin:5px 0}
+.mpt-guide-device-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.mpt-guide-device{border:1px solid var(--BOR);border-radius:11px;background:linear-gradient(180deg,#fff,#F9FCFA);padding:14px 15px;min-width:0}
+@media(max-width:768px){
+  #pg-guide .card{padding:15px}
+  #pg-guide .tab-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+  #pg-guide .tab-btn{white-space:normal!important;min-height:44px;text-align:center}
+  .mpt-guide-device-grid{grid-template-columns:1fr}
+  .mpt-guide-version-note{font-size:15px}
+  .mpt-guide-access-card ol,.mpt-guide-device ol{font-size:15px;line-height:1.75;padding-left:19px}
+  .mpt-guide-access-title,.mpt-guide-device-title{font-size:16px}
+}
+</style>
+
 <!-- ====================== GUIDE ====================== -->
 <div id="pg-guide" class="pg" data-mpt-tools="guide">
 <div class="st">📖 Hướng dẫn Sử dụng &amp; Từ viết tắt</div>
-<div class="ss">Cách dùng web app · Bảng ký hiệu màu · Từ viết tắt y khoa và dược lâm sàng đầy đủ</div>
+<div class="ss">Hướng dẫn theo giao diện PC &amp; mobile hiện tại · Bảng ký hiệu màu · Từ viết tắt y khoa và dược lâm sàng</div>
 
 <!-- HƯỚNG DẪN SỬ DỤNG -->
 <div class="card">
   <div class="card-h"><div class="ci ci-b">📖</div><div><div class="card-t">Hướng dẫn sử dụng</div><div class="card-s">MedPlus Medical Tools</div></div></div>
   <div class="tab-row">
     <button class="tab-btn active" data-tab="guide" data-target="guide-basic">🖥️ Cơ bản</button>
-    <button class="tab-btn" data-tab="guide" data-target="guide-modules">📦 Các module</button>
+    <button class="tab-btn" data-tab="guide" data-target="guide-modules">📦 Các công cụ</button>
     <button class="tab-btn" data-tab="guide" data-target="guide-tips">💡 Mẹo &amp; Phím tắt</button>
     <button class="tab-btn" data-tab="guide" data-target="guide-disclaimer">⚠️ Tuyên bố miễn trách</button>
   </div>
 
   <!-- Tab: Cơ bản -->
   <div class="tab-c active" id="guide-basic">
-    <ol style="padding-left:20px;font-size:15px;color:var(--T2);line-height:2.4;margin-bottom:12px">
-      <li>Chọn công cụ đã được cấp quyền từ <strong style="color:var(--PD)">thanh điều hướng bên trái</strong> (hoặc nút <kbd>☰</kbd> trên mobile)</li>
-      <li>Nhập đầy đủ thông số lâm sàng của bệnh nhân vào các ô tương ứng</li>
-      <li>Nhấn nút <strong style="color:var(--P)">⚡ Tính toán</strong> — kết quả hiển thị ngay bên dưới</li>
-      <li>Đọc phần <strong>Diễn giải lâm sàng</strong> (màu <span style="color:var(--G-TXT);font-weight:700">Xanh</span> / <span style="color:var(--W-TXT);font-weight:700">Vàng</span> / <span style="color:var(--R-TXT);font-weight:700">Đỏ</span> theo mức độ) kèm tài liệu tham khảo</li>
-      <li>Nhấn <strong>🗑️ Xoá</strong> để nhập ca bệnh mới</li>
-    </ol>
+    <div class="mpt-guide-version-note">
+      <strong>Giao diện hiện tại:</strong> PC dùng thanh điều hướng bên trái. Trên mobile <strong>không còn dùng menu ☰</strong>; các chức năng chính nằm ở thanh điều hướng kính phía dưới.
+    </div>
+
+    <div class="mpt-guide-access-card">
+      <div class="mpt-guide-access-title">🔐 Đăng nhập &amp; cấp quyền</div>
+      <ol>
+        <li>Đăng nhập bằng tài khoản Google đã được quản trị MedPlus cấp quyền.</li>
+        <li>Nếu chưa có tài khoản, chọn <strong>Đăng ký tài khoản</strong>, nhập bắt buộc <strong>Họ và tên</strong> và <strong>Khoa / Phòng</strong>, xác thực Google rồi gửi yêu cầu. Sau khi gửi, chờ quản trị viên phê duyệt.</li>
+        <li>Hệ thống chỉ hiển thị các công cụ lâm sàng mà tài khoản hiện tại được phép sử dụng. <strong>Hướng dẫn &amp; Viết tắt</strong> là tài liệu dùng chung, không được tính là một công cụ lâm sàng.</li>
+      </ol>
+    </div>
+
+    <div class="mpt-guide-device-grid">
+      <section class="mpt-guide-device">
+        <div class="mpt-guide-device-title">🖥️ Trên máy tính (PC)</div>
+        <ol>
+          <li>Chọn công cụ ở <strong>thanh điều hướng bên trái</strong>. Các nhóm và công cụ không được cấp quyền sẽ không hiển thị.</li>
+          <li>Dùng nút <strong>Tìm kiếm</strong> trên thanh trên cùng, hoặc nhấn <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>K</kbd>, để tìm nhanh công cụ, thuốc hoặc nội dung liên quan.</li>
+          <li>Nhập/chọn đầy đủ thông số lâm sàng. Tùy công cụ, dùng nút <strong>Tính toán</strong>, <strong>Tra cứu</strong>, <strong>Tiếp tục</strong> hoặc chọn kết quả gợi ý.</li>
+          <li>Đọc kết quả, diễn giải lâm sàng và tài liệu tham khảo ngay trong công cụ. Với bảng rộng, dùng thanh cuộn ngang khi cần.</li>
+          <li>Nếu công cụ có nút <strong>Xóa / Đặt lại</strong>, dùng nút đó để bắt đầu ca mới.</li>
+        </ol>
+      </section>
+
+      <section class="mpt-guide-device">
+        <div class="mpt-guide-device-title">📱 Trên điện thoại</div>
+        <ol>
+          <li>Dùng thanh dưới cùng gồm <strong>Trang chủ · Danh mục · Tra cứu · Đã lưu · Tài khoản</strong>. Không dùng menu trượt từ bên trái.</li>
+          <li><strong>Trang chủ</strong> là bảng điều khiển nhanh: hiển thị công cụ truy cập nhanh, nhóm chính và ô tra cứu toàn hệ thống.</li>
+          <li><strong>Danh mục</strong> là trang riêng chứa toàn bộ công cụ được cấp quyền, sắp theo nhóm chuyên môn và có ô tìm kiếm riêng.</li>
+          <li><strong>Tra cứu</strong> mở tìm kiếm toàn hệ thống. <strong>Đã lưu</strong> chứa các công cụ hay dùng đã đánh dấu. <strong>Tài khoản</strong> hiển thị thông tin tài khoản, quyền quản trị (nếu có) và Đăng xuất.</li>
+          <li>Để lưu công cụ hay dùng, chạm biểu tượng <strong>dấu trang</strong> trên Trang chủ hoặc Danh mục. Danh sách đã lưu được lưu theo tài khoản Google trên trình duyệt/thiết bị đang dùng.</li>
+          <li>Có thể <strong>chạm giữ một nút ở thanh dưới</strong> để giọt kính chuyển tới nút đó, kéo ngang qua các nút rồi thả để chuyển mục.</li>
+          <li>Bảng 3–5 cột có thể tự chuyển thành card để dễ đọc; bảng rộng sẽ giữ dạng bảng và có thể vuốt ngang.</li>
+        </ol>
+      </section>
+    </div>
+
     <div class="hl hl-w">⚠️ Mọi kết quả tính toán chỉ mang tính chất <strong>hỗ trợ quyết định</strong>. Bác sĩ/Dược sĩ lâm sàng phải luôn đánh giá trong bối cảnh lâm sàng cụ thể của từng bệnh nhân trước khi áp dụng.</div>
   </div>
 
@@ -4338,13 +4389,17 @@ body:not(.mpt-auth-ok) #SB,body:not(.mpt-auth-ok) #MAIN,body:not(.mpt-auth-ok) #
   <!-- Tab: Mẹo & Phím tắt -->
   <div class="tab-c" id="guide-tips">
     <div style="display:grid;gap:10px;font-size:15px;color:var(--T2)">
-      <div class="ir"><strong style="color:var(--PD)"><kbd>Ctrl</kbd>+<kbd>Enter</kbd></strong><span>Tính nhanh trong module đang mở</span></div>
-      <div class="ir"><strong style="color:var(--PD)"><kbd>Esc</kbd></strong><span>Đóng thanh điều hướng trên mobile</span></div>
-      <div class="ir"><strong style="color:var(--PD)">🔍 Tìm kiếm viết tắt</strong><span>Nhập bất kỳ ký tự vào ô tìm kiếm trong bảng viết tắt phía dưới</span></div>
-      <div class="ir"><strong style="color:var(--PD)">Số âm</strong><span>Tự động xóa — ô nhập liệu không chấp nhận giá trị âm</span></div>
-      <div class="ir" data-mpt-tools="renal"><strong style="color:var(--PD)">Đơn vị Creatinine</strong><span>Module CrCl &amp; eGFR hỗ trợ toggle mg/dL ↔ µmol/L</span></div>
-      <div class="ir" data-mpt-tools="opioid"><strong style="color:var(--PD)">Fentanyl patch</strong><span>Nhập mcg/h (không phải mg) — hệ số CDC 2022: 1 mcg/h = 2.4 MME/ngày</span></div>
-      <div class="ir"><strong style="color:var(--PD)">Sao chép kết quả</strong><span>Chọn vùng kết quả và sao chép thủ công — không có nút copy riêng</span></div>
+      <div class="ir"><strong style="color:var(--PD)"><kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>K</kbd></strong><span>Mở Tra cứu toàn hệ thống trên PC/Mac.</span></div>
+      <div class="ir"><strong style="color:var(--PD)"><kbd>Ctrl</kbd>/<kbd>⌘</kbd>+<kbd>Enter</kbd></strong><span>Chạy nút tính chính của công cụ đang mở, nếu công cụ đó có nút tính toán.</span></div>
+      <div class="ir"><strong style="color:var(--PD)"><kbd>Esc</kbd></strong><span>Trên PC: đóng cửa sổ Tra cứu đang mở. Mobile sử dụng nút đóng/chạm ra ngoài hoặc thanh điều hướng phía dưới.</span></div>
+      <div class="ir"><strong style="color:var(--PD)">📱 Kéo giọt kính</strong><span>Chạm giữ một mục ở thanh dưới để giọt kính chuyển tới đó; kéo ngang rồi thả để chọn mục khác.</span></div>
+      <div class="ir"><strong style="color:var(--PD)">🔖 Công cụ hay dùng</strong><span>Chạm dấu trang trên Trang chủ/Danh mục để thêm hoặc bỏ khỏi mục Đã lưu. Hướng dẫn &amp; Viết tắt không được tính là công cụ và không đưa vào Đã lưu.</span></div>
+      <div class="ir"><strong style="color:var(--PD)">🔍 Tìm kiếm viết tắt</strong><span>Nhập từ khóa vào ô tìm kiếm trong Bảng từ viết tắt ở phía dưới trang này.</span></div>
+      <div class="ir"><strong style="color:var(--PD)">📋 Bảng trên mobile</strong><span>Bảng vừa sẽ tự chuyển thành card; bảng nhiều cột giữ dạng bảng và vuốt ngang để xem thêm.</span></div>
+      <div class="ir"><strong style="color:var(--PD)">Số âm</strong><span>Các ô số được bảo vệ không nhận giá trị âm khi giá trị âm không phù hợp với loại dữ liệu.</span></div>
+      <div class="ir" data-mpt-tools="renal"><strong style="color:var(--PD)">Đơn vị Creatinine</strong><span>Công cụ CrCl &amp; eGFR hỗ trợ chuyển mg/dL ↔ µmol/L.</span></div>
+      <div class="ir" data-mpt-tools="opioid"><strong style="color:var(--PD)">Fentanyl patch</strong><span>Nhập mcg/h (không phải mg) — hệ số CDC 2022: 1 mcg/h = 2.4 MME/ngày.</span></div>
+      <div class="ir"><strong style="color:var(--PD)">Sao chép kết quả</strong><span>Chọn vùng kết quả và sao chép thủ công khi cần; các công cụ hiện không có một nút copy dùng chung.</span></div>
     </div>
     <div class="hl" data-mpt-tools="nelson abxdose" style="margin-top:12px">💡 <strong>Lưu ý độ tuổi:</strong> <span data-mpt-tools="nelson">Với trẻ em dùng công cụ <em>Tính liều KS Nhi</em>. </span><span data-mpt-tools="abxdose">Công cụ <em>Hiệu chỉnh liều kháng sinh</em> chỉ áp dụng cho người lớn ≥18 tuổi.</span></div>
   </div>
@@ -7329,6 +7384,11 @@ window.MedPlusGlobalSearch={open:openSearch,rebuild:function(){searchIndex=null;
   .mpt-bottom-liquid,.mpt-bottom-glass-surface{transition-duration:.01ms!important}.mpt-bottom-btn.mpt-pulse svg,.mpt-bottom-btn.mpt-pulse>span,#mpt-mobile-bottom.mpt-nav-breathe .mpt-bottom-glass-surface{animation:none!important}
 }
   .mpt-home-mobile-ebm{margin-top:10px;padding:11px 12px;border:1px solid #C7E3D4;border-radius:12px;background:linear-gradient(145deg,#F4FBF7,#EAF7F0);box-shadow:0 5px 14px rgba(11,95,66,.07);font-size:14px;line-height:1.55;color:#184F3A;font-weight:760}
+  .mpt-home-guide-link{width:100%;margin-top:11px;border:1px solid var(--BOR);border-radius:14px;background:#fff;min-height:58px;padding:10px 12px;display:flex;align-items:center;gap:10px;text-align:left;color:var(--TXT);box-shadow:0 4px 14px rgba(22,135,91,.06);font-family:inherit}
+  .mpt-home-guide-ico{width:34px;height:34px;border-radius:10px;background:rgba(14,143,120,.10);display:flex;align-items:center;justify-content:center;font-size:19px;flex:0 0 34px}
+  .mpt-home-guide-link b{display:block;font-size:14px;color:var(--PD);line-height:1.25}
+  .mpt-home-guide-link small{display:block;font-size:11.5px;color:var(--TM);line-height:1.35;margin-top:2px}
+  .mpt-home-guide-go{margin-left:auto;color:var(--T);font-size:24px;line-height:1}
 </style>
 
 <nav id="mpt-mobile-bottom" aria-label="Điều hướng nhanh trên điện thoại">
@@ -7347,7 +7407,7 @@ window.MedPlusGlobalSearch={open:openSearch,rebuild:function(){searchIndex=null;
   </section>
 </div>
 
-<script id="MPT-R11-2-16-MOBILE-NAV-RUNTIME">
+<script id="MPT-R11-2-20-MOBILE-NAV-RUNTIME">
 (function(){'use strict';
 var FAV_PREFIX='MPT_FAVORITES_V1:';
 function $(id){return document.getElementById(id)}
@@ -7371,8 +7431,8 @@ function bookmarkSvg(){return '<svg viewBox="0 0 24 24" aria-hidden="true"><path
 function renderMobileHomeDashboard(){var d=ensureMobileHomeDashboard();if(!d)return;var items=catalogItems(),fav=loadFavs().filter(function(id){return id!=='guide'&&allowed(id)}),byId=new Map(items.map(function(x){return[x.id,x]})),priority=['druginfo','interaction','inject','abxempiric','vanco','renal','ivpo','icuinfusion'],ids=[];fav.concat(priority).concat(items.map(function(x){return x.id})).forEach(function(id){if(byId.has(id)&&ids.indexOf(id)<0&&ids.length<4)ids.push(id)});var quick=ids.map(function(id){return byId.get(id)});var groupDefs=[['Kháng sinh','QUẢN LÝ KHÁNG SINH'],['Tính liều / TDM','Tính liều thuốc chuyên biệt'],['Thang điểm','Thang điểm lâm sàng'],['Tra cứu thuốc','Tra cứu thuốc']];var groups=groupDefs.map(function(g){return{label:g[0],needle:g[1],count:items.filter(function(x){return x.group.indexOf(g[1])>=0}).length}}).filter(function(g){return g.count>0});var saved=fav.length;
   d.innerHTML='<div class="mpt-home-mobile-head"><div class="mpt-home-mobile-kicker">Khoa Dược · BVĐK Tuyên Quang</div><div class="mpt-home-mobile-title">MedPlus</div><div class="mpt-home-mobile-ebm">Hệ thống hỗ trợ ra quyết định Dược lâm sàng dựa trên y học chứng cứ (EBM). Chọn công cụ được cấp quyền bên dưới để bắt đầu.</div><div class="mpt-home-mobile-sub">Bảng điều khiển nhanh cho các công cụ lâm sàng bạn được cấp quyền.</div><div class="mpt-home-metrics"><div class="mpt-home-metric"><b>'+items.length+'</b><span>Công cụ</span></div><div class="mpt-home-metric"><b>'+new Set(items.map(function(x){return x.group})).size+'</b><span>Nhóm</span></div><div class="mpt-home-metric"><b>'+saved+'</b><span>Đã lưu</span></div></div><button class="mpt-home-search" type="button" data-home-search><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg><span>Tra cứu toàn hệ thống</span></button></div>'+
   '<div class="mpt-home-section-head"><div class="mpt-home-section-title">Truy cập nhanh</div><button class="mpt-home-section-link" type="button" data-home-catalog>Danh mục đầy đủ ›</button></div><div class="mpt-home-quick-grid">'+quick.map(function(it){var ico=it.iconHtml||esc(it.icon);return '<div class="mpt-home-quick"><button class="mpt-home-quick-open" type="button" data-home-tool="'+esc(it.id)+'"><span class="mpt-home-quick-ico">'+ico+'</span><span class="mpt-home-quick-name">'+esc(it.label)+'</span><span class="mpt-home-quick-group">'+esc(it.group)+'</span></button><button class="mpt-home-quick-fav" type="button" data-fav-id="'+esc(it.id)+'" aria-label="Lưu công cụ hay dùng">'+bookmarkSvg()+'</button></div>'}).join('')+'</div>'+
-  '<div class="mpt-home-section-head"><div class="mpt-home-section-title">Nhóm chính</div></div><div class="mpt-home-groups">'+groups.map(function(g){return '<button class="mpt-home-group" type="button" data-home-group="'+esc(g.needle)+'"><b>'+esc(g.label)+'</b><span>'+g.count+' công cụ</span></button>'}).join('')+'</div><button class="mpt-home-catalog-cta" type="button" data-home-catalog>Xem toàn bộ Danh mục công cụ</button>';
-  d.querySelectorAll('[data-home-tool]').forEach(function(b){b.onclick=function(){if(typeof window.showPg==='function')window.showPg(b.dataset.homeTool)}});d.querySelectorAll('.mpt-home-quick-fav[data-fav-id]').forEach(function(b){b.onclick=function(e){e.stopPropagation();toggleFav(b.dataset.favId)}});d.querySelectorAll('[data-home-catalog]').forEach(function(b){b.onclick=function(){openCatalogPage()}});var hs=d.querySelector('[data-home-search]');if(hs)hs.onclick=function(){var b=document.querySelector('[data-mpt-bottom="search"]');if(b)b.click()};d.querySelectorAll('[data-home-group]').forEach(function(b){b.onclick=function(){openCatalogPage(b.dataset.homeGroup)}});updateFavButtons()}
+  '<div class="mpt-home-section-head"><div class="mpt-home-section-title">Nhóm chính</div></div><div class="mpt-home-groups">'+groups.map(function(g){return '<button class="mpt-home-group" type="button" data-home-group="'+esc(g.needle)+'"><b>'+esc(g.label)+'</b><span>'+g.count+' công cụ</span></button>'}).join('')+'</div><button class="mpt-home-catalog-cta" type="button" data-home-catalog>Xem toàn bộ Danh mục công cụ</button><button class="mpt-home-guide-link" type="button" data-home-guide><span class="mpt-home-guide-ico">📖</span><span><b>Hướng dẫn &amp; Từ viết tắt</b><small>Tài liệu dùng chung · không tính là công cụ</small></span><span class="mpt-home-guide-go">›</span></button>';
+  d.querySelectorAll('[data-home-tool]').forEach(function(b){b.onclick=function(){if(typeof window.showPg==='function')window.showPg(b.dataset.homeTool)}});d.querySelectorAll('.mpt-home-quick-fav[data-fav-id]').forEach(function(b){b.onclick=function(e){e.stopPropagation();toggleFav(b.dataset.favId)}});d.querySelectorAll('[data-home-catalog]').forEach(function(b){b.onclick=function(){openCatalogPage()}});var hg=d.querySelector('[data-home-guide]');if(hg)hg.onclick=function(){if(typeof window.showPg==='function')window.showPg('guide')};var hs=d.querySelector('[data-home-search]');if(hs)hs.onclick=function(){var b=document.querySelector('[data-mpt-bottom="search"]');if(b)b.click()};d.querySelectorAll('[data-home-group]').forEach(function(b){b.onclick=function(){openCatalogPage(b.dataset.homeGroup)}});updateFavButtons()}
 function renderCatalog(){var page=ensureCatalogPage();if(!page)return;var items=catalogItems(),groups=[];items.forEach(function(it){var g=groups.find(function(x){return x.name===it.group});if(!g){g={name:it.group,items:[]};groups.push(g)}g.items.push(it)});page.innerHTML='<div class="mpt-catalog-hero"><div class="mpt-catalog-kicker">Danh mục MedPlus</div><div class="mpt-catalog-title">Tất cả công cụ</div><div class="mpt-catalog-sub">'+items.length+' công cụ được cấp quyền, sắp theo nhóm chuyên môn.</div></div><div class="mpt-catalog-search-wrap"><svg class="mpt-catalog-search-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg><input id="mpt-catalog-search" class="mpt-catalog-search" type="search" inputmode="search" autocomplete="off" placeholder="Tìm trong danh mục..." aria-label="Tìm trong danh mục"><button id="mpt-catalog-clear" class="mpt-catalog-clear" type="button" aria-label="Xóa tìm kiếm">×</button></div><div id="mpt-catalog-groups">'+groups.map(function(g){return '<section class="mpt-catalog-group" data-catalog-group data-catalog-group-name="'+esc(g.name)+'"><div class="mpt-catalog-group-h"><div class="mpt-catalog-group-title">'+esc(g.name)+'</div><div class="mpt-catalog-group-count">'+g.items.length+' mục</div></div><div class="mpt-catalog-grid">'+g.items.map(function(it){var ico=it.iconHtml||esc(it.icon),search=esc((it.label+' '+it.group+' '+it.desc).toLowerCase());return '<div class="mpt-catalog-tool" role="button" tabindex="0" data-catalog-tool="'+esc(it.id)+'" data-catalog-search="'+search+'"><span class="mpt-catalog-tool-ico">'+ico+'</span><span class="mpt-catalog-tool-main"><span class="mpt-catalog-tool-name">'+esc(it.label)+'</span>'+(it.desc?'<span class="mpt-catalog-tool-desc">'+esc(it.desc)+'</span>':'')+'</span><span class="mpt-catalog-tool-side">'+(it.badge?'<span class="mpt-catalog-tool-badge">'+esc(it.badge)+'</span>':'')+'<button class="mpt-catalog-fav" type="button" data-fav-id="'+esc(it.id)+'" aria-label="Lưu công cụ hay dùng">'+bookmarkSvg()+'</button></span></div>'}).join('')+'</div></section>'}).join('')+'</div><div id="mpt-catalog-empty" class="mpt-catalog-empty">Không tìm thấy công cụ phù hợp.</div>';
   page.querySelectorAll('[data-catalog-tool]').forEach(function(row){function open(){var id=row.dataset.catalogTool;if(typeof window.showPg==='function')window.showPg(id)}row.addEventListener('click',function(e){if(e.target.closest('.mpt-catalog-fav'))return;open()});row.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&!e.target.closest('.mpt-catalog-fav')){e.preventDefault();open()}})});page.querySelectorAll('.mpt-catalog-fav[data-fav-id]').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleFav(b.dataset.favId)})});
   var input=$('mpt-catalog-search'),clear=$('mpt-catalog-clear');function filter(){var q=String(input&&input.value||'').trim().toLowerCase(),visible=0;page.querySelectorAll('[data-catalog-tool]').forEach(function(b){var on=!q||(b.dataset.catalogSearch||'').indexOf(q)>=0;b.style.display=on?'':'none';if(on)visible++});page.querySelectorAll('[data-catalog-group]').forEach(function(g){g.style.display=g.querySelector('[data-catalog-tool]:not([style*="display: none"])')?'':'none'});var empty=$('mpt-catalog-empty');if(empty)empty.classList.toggle('show',visible===0);if(clear)clear.classList.toggle('show',!!q)}if(input)input.addEventListener('input',filter);if(clear)clear.addEventListener('click',function(){if(input){input.value='';filter();input.focus()}});updateFavButtons()}
