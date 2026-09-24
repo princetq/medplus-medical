@@ -861,7 +861,32 @@ body:not(.mpt-auth-ok) #SB,body:not(.mpt-auth-ok) #MAIN,body:not(.mpt-auth-ok) #
     overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
   }
 }
-</style></head>
+</style>
+<style id="MPT-R11-2-49-IOS-SELECT-SHEET-CSS">
+/* iPhone/iPad: render select menus inside MedPlus so the floating glass bar can never cover the last options. */
+@media(max-width:768px){
+  #mpt-ios-select-sheet{position:fixed;inset:0;z-index:200600;display:none;align-items:flex-end;justify-content:stretch;background:rgba(8,31,23,.34);padding-top:max(14px,env(safe-area-inset-top));}
+  #mpt-ios-select-sheet.open{display:flex;}
+  .mpt-ios-select-panel{width:100%;max-height:min(82dvh,calc(100dvh - max(20px,env(safe-area-inset-top))));display:flex;flex-direction:column;background:#fff;border-radius:20px 20px 0 0;box-shadow:0 -14px 42px rgba(14,57,42,.22);overflow:hidden;padding-bottom:env(safe-area-inset-bottom);}
+  .mpt-ios-select-head{display:flex;align-items:center;gap:10px;padding:14px 16px 12px;border-bottom:1px solid var(--BOR,#CFE3D7);background:#fff;flex:0 0 auto;}
+  .mpt-ios-select-title{flex:1;min-width:0;font-size:16px;font-weight:800;color:var(--PD,#0B5F42);line-height:1.35;overflow-wrap:anywhere;}
+  .mpt-ios-select-close{width:38px;height:38px;border:1px solid var(--BOR,#CFE3D7);border-radius:11px;background:var(--BG,#F3F8F5);color:var(--T2,#4A6280);font-size:24px;line-height:1;display:grid;place-items:center;flex:0 0 auto;}
+  .mpt-ios-select-search-wrap{padding:10px 14px 8px;background:#fff;flex:0 0 auto;}
+  .mpt-ios-select-search{width:100%;min-height:42px;border:1.5px solid var(--BOR,#CFE3D7);border-radius:10px;padding:8px 11px;font-size:16px;background:#FAFCFB;color:var(--TXT,#1A2B3C);outline:none;}
+  .mpt-ios-select-search:focus{border-color:var(--P,#16875B);box-shadow:0 0 0 3px rgba(22,135,91,.08);background:#fff;}
+  .mpt-ios-select-list{overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:4px 12px max(18px,env(safe-area-inset-bottom));flex:1 1 auto;min-height:0;background:#fff;}
+  .mpt-ios-select-group{padding:10px 10px 5px;font-size:12px;font-weight:800;letter-spacing:.45px;text-transform:uppercase;color:var(--TM,#5F7388);}
+  .mpt-ios-select-option{width:100%;min-height:46px;border:0;border-bottom:1px solid rgba(207,227,215,.72);background:#fff;color:var(--TXT,#1A2B3C);padding:10px 11px;font:600 15.5px/1.4 "Be Vietnam Pro",sans-serif;text-align:left;display:flex;align-items:center;gap:10px;border-radius:0;}
+  .mpt-ios-select-option:last-child{border-bottom:0;}
+  .mpt-ios-select-option.selected{background:#EDF8F2;color:var(--PD,#0B5F42);font-weight:800;border-radius:10px;}
+  .mpt-ios-select-option.selected::after{content:"✓";margin-left:auto;color:var(--P,#16875B);font-size:17px;font-weight:900;}
+  .mpt-ios-select-option:disabled{opacity:.45;}
+  .mpt-ios-select-empty{padding:22px 12px;text-align:center;color:var(--TM,#5F7388);font-size:14px;}
+  /* Custom dropdowns keep a genuine safe bottom even when visualViewport changes on iOS. */
+  .dropdown-list.show,.mpt-dept-menu:not([hidden]){z-index:200500!important;padding-bottom:max(8px,env(safe-area-inset-bottom));overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
+}
+</style>
+</head>
 <body class="authed">
 <div id="OVL"></div>
 
@@ -7677,10 +7702,12 @@ setTimeout(schedule,250);setTimeout(schedule,900);
     var anchor=wrap.querySelector('input,button,select')||wrap;
     var r=anchor.getBoundingClientRect();
     var vv=window.visualViewport;
-    var h=vv?vv.height:window.innerHeight;
-    var below=Math.max(0,h-r.bottom-12);
-    var above=Math.max(0,r.top-12);
-    var useAbove=below<180&&above>below;
+    var viewTop=vv?vv.offsetTop:0;
+    var viewBottom=viewTop+(vv?vv.height:window.innerHeight);
+    var bottomReserve=26;
+    var below=Math.max(0,viewBottom-r.bottom-bottomReserve);
+    var above=Math.max(0,r.top-viewTop-12);
+    var useAbove=below<190&&above>below;
     menu.style.maxHeight=Math.max(120,Math.min(280,(useAbove?above:below)-8))+'px';
     if(useAbove){menu.style.top='auto';menu.style.bottom='calc(100% + 6px)'}
     else{menu.style.top='calc(100% + 6px)';menu.style.bottom='auto'}
@@ -7725,5 +7752,116 @@ setTimeout(schedule,250);setTimeout(schedule,900);
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
   window.MedPlusMobileControlMenuSafe={sync:syncCustomMenus,open:function(el){setMenuOpen(true);ensureControlRoom(el)},close:function(){releaseSoon(0)}};
 })();
-</script></body>
+</script>
+<script id="MPT-R11-2-49-IOS-SELECT-SHEET-JS">
+(function(){
+  'use strict';
+  var sheet=null,current=null,lastOpenAt=0,searchInput=null,listEl=null,titleEl=null;
+  function isIOS(){
+    var ua=navigator.userAgent||'';
+    return /iPad|iPhone|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  }
+  function mobile(){return !!(window.matchMedia&&window.matchMedia('(max-width:768px)').matches)}
+  function eligible(sel){return !!(isIOS()&&mobile()&&sel&&sel.tagName==='SELECT'&&!sel.disabled&&!sel.multiple&&!(sel.size&&sel.size>1))}
+  function textOf(n){return String((n&&n.textContent)||'').replace(/\s+/g,' ').trim()}
+  function fieldLabel(sel){
+    if(sel.id){
+      var labs=document.getElementsByTagName('label');
+      for(var i=0;i<labs.length;i++)if(labs[i].htmlFor===sel.id){var t=textOf(labs[i]);if(t)return t}
+    }
+    var p=sel.parentElement,depth=0;
+    while(p&&depth<4){
+      var ch=p.children||[];
+      for(var j=0;j<ch.length;j++)if(ch[j].tagName==='LABEL'){var x=textOf(ch[j]);if(x)return x}
+      p=p.parentElement;depth++;
+    }
+    return sel.getAttribute('aria-label')||sel.name||'Chọn giá trị';
+  }
+  function ensureSheet(){
+    if(sheet)return sheet;
+    sheet=document.createElement('div');sheet.id='mpt-ios-select-sheet';sheet.setAttribute('aria-hidden','true');
+    sheet.innerHTML='<section class="mpt-ios-select-panel" role="dialog" aria-modal="true" aria-labelledby="mpt-ios-select-title"><div class="mpt-ios-select-head"><div class="mpt-ios-select-title" id="mpt-ios-select-title">Chọn giá trị</div><button type="button" class="mpt-ios-select-close" aria-label="Đóng">×</button></div><div class="mpt-ios-select-search-wrap" hidden><input class="mpt-ios-select-search" type="search" autocomplete="off" spellcheck="false" placeholder="Tìm trong danh sách" aria-label="Tìm trong danh sách"></div><div class="mpt-ios-select-list" role="listbox"></div></section>';
+    document.body.appendChild(sheet);
+    titleEl=sheet.querySelector('.mpt-ios-select-title');searchInput=sheet.querySelector('.mpt-ios-select-search');listEl=sheet.querySelector('.mpt-ios-select-list');
+    sheet.querySelector('.mpt-ios-select-close').addEventListener('click',close);
+    sheet.addEventListener('click',function(e){if(e.target===sheet)close()});
+    searchInput.addEventListener('input',filter);
+    return sheet;
+  }
+  function build(){
+    if(!current)return;
+    var total=current.options.length,html='';
+    Array.prototype.forEach.call(current.children,function(node){
+      if(node.tagName==='OPTGROUP'){
+        html+='<div class="mpt-ios-select-group" data-group="1">'+escapeHtml(node.label)+'</div>';
+        Array.prototype.forEach.call(node.children,function(opt){html+=optionHtml(opt)});
+      }else if(node.tagName==='OPTION')html+=optionHtml(node);
+    });
+    if(!html)html='<div class="mpt-ios-select-empty">Không có lựa chọn</div>';
+    listEl.innerHTML=html;
+    var wrap=sheet.querySelector('.mpt-ios-select-search-wrap');
+    wrap.hidden=total<12;
+    searchInput.value='';
+    listEl.querySelectorAll('.mpt-ios-select-option').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        if(!current||btn.disabled)return;
+        var idx=parseInt(btn.getAttribute('data-index'),10);
+        if(!Number.isFinite(idx)||!current.options[idx])return;
+        var changed=current.selectedIndex!==idx;
+        current.selectedIndex=idx;
+        if(changed){current.dispatchEvent(new Event('input',{bubbles:true}));current.dispatchEvent(new Event('change',{bubbles:true}))}
+        close();
+        try{current.focus({preventScroll:true})}catch(_e){}
+      });
+    });
+    requestAnimationFrame(function(){var selected=listEl.querySelector('.mpt-ios-select-option.selected');if(selected)selected.scrollIntoView({block:'center'})});
+  }
+  function optionHtml(opt){
+    var idx=Array.prototype.indexOf.call(current.options,opt),selected=opt.selected?' selected':'',disabled=opt.disabled?' disabled':'';
+    return '<button type="button" class="mpt-ios-select-option'+selected+'" role="option" aria-selected="'+(opt.selected?'true':'false')+'" data-index="'+idx+'"'+disabled+' data-search="'+escapeAttr(textOf(opt).toLowerCase())+'">'+escapeHtml(textOf(opt))+'</button>';
+  }
+  function escapeHtml(v){return String(v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  function escapeAttr(v){return escapeHtml(v)}
+  function filter(){
+    var q=(searchInput.value||'').toLowerCase().trim(),visible=0;
+    listEl.querySelectorAll('.mpt-ios-select-option').forEach(function(btn){var show=!q||(btn.getAttribute('data-search')||'').indexOf(q)>=0;btn.hidden=!show;if(show)visible++});
+    var groups=[].slice.call(listEl.querySelectorAll('.mpt-ios-select-group'));
+    groups.forEach(function(g){var n=g.nextElementSibling,any=false;while(n&&!n.classList.contains('mpt-ios-select-group')){if(n.classList.contains('mpt-ios-select-option')&&!n.hidden){any=true;break}n=n.nextElementSibling}g.hidden=!any});
+    var empty=listEl.querySelector('.mpt-ios-select-empty.mpt-filter-empty');
+    if(!visible){if(!empty){empty=document.createElement('div');empty.className='mpt-ios-select-empty mpt-filter-empty';empty.textContent='Không tìm thấy lựa chọn phù hợp';listEl.appendChild(empty)}}else if(empty)empty.remove();
+  }
+  function open(sel){
+    if(!eligible(sel))return false;
+    ensureSheet();current=sel;titleEl.textContent=fieldLabel(sel);build();sheet.classList.add('open');sheet.setAttribute('aria-hidden','false');lastOpenAt=Date.now();
+    if(window.MedPlusMobileControlMenuSafe&&window.MedPlusMobileControlMenuSafe.open)window.MedPlusMobileControlMenuSafe.open(sel);
+    return true;
+  }
+  function close(){
+    if(!sheet||!sheet.classList.contains('open'))return;
+    sheet.classList.remove('open');sheet.setAttribute('aria-hidden','true');
+    var old=current;current=null;
+    if(window.MedPlusMobileControlMenuSafe&&window.MedPlusMobileControlMenuSafe.close)window.MedPlusMobileControlMenuSafe.close();
+    if(old)try{old.blur()}catch(_e){}
+  }
+  function intercept(e){
+    var sel=e.target&&e.target.closest?e.target.closest('select'):null;
+    if(!eligible(sel))return;
+    e.preventDefault();e.stopPropagation();
+    if(current===sel&&sheet&&sheet.classList.contains('open'))return;
+    open(sel);
+  }
+  document.addEventListener('touchstart',intercept,{capture:true,passive:false});
+  document.addEventListener('pointerdown',function(e){if(e.pointerType==='touch'||e.pointerType==='pen')intercept(e)},true);
+  document.addEventListener('click',function(e){
+    var sel=e.target&&e.target.closest?e.target.closest('select'):null;
+    if(!eligible(sel))return;
+    e.preventDefault();e.stopImmediatePropagation();
+    if(!sheet||!sheet.classList.contains('open')||current!==sel)open(sel);
+  },true);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sheet&&sheet.classList.contains('open')){e.preventDefault();close()}},true);
+  window.addEventListener('orientationchange',function(){if(sheet&&sheet.classList.contains('open'))setTimeout(function(){var s=listEl.querySelector('.mpt-ios-select-option.selected');if(s)s.scrollIntoView({block:'center'})},180)});
+  window.MedPlusIOSSelectSheet={open:open,close:close,isIOS:isIOS};
+})();
+</script>
+</body>
 </html>
