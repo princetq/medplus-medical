@@ -886,6 +886,22 @@ body:not(.mpt-auth-ok) #SB,body:not(.mpt-auth-ok) #MAIN,body:not(.mpt-auth-ok) #
   .dropdown-list.show,.mpt-dept-menu:not([hidden]){z-index:200500!important;padding-bottom:max(8px,env(safe-area-inset-bottom));overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
 }
 </style>
+<style id="MPT-R11-2-50-IOS-DROPDOWN-HARD-FIX-CSS">
+/* R11.2.50: hard iOS dropdown guard. Never allow the floating glass nav to overlap an open menu. */
+@media(max-width:768px){
+  body.mpt-control-menu-open #mpt-mobile-bottom,
+  body.mpt-ios-select-open #mpt-mobile-bottom{display:none!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important;}
+  @supports selector(body:has(*)){
+    body:has(#mpt-ios-select-sheet.open) #mpt-mobile-bottom,
+    body:has(.dropdown-list.show) #mpt-mobile-bottom,
+    body:has(.mpt-dept-menu:not([hidden])) #mpt-mobile-bottom{display:none!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important;}
+  }
+  select.mpt-ios-select-guarded{pointer-events:none!important;touch-action:none!important;}
+  #mpt-ios-select-sheet{bottom:0!important;height:100dvh;min-height:100dvh;}
+  .mpt-ios-select-panel{padding-bottom:max(16px,env(safe-area-inset-bottom));}
+  .mpt-ios-select-list{padding-bottom:calc(24px + env(safe-area-inset-bottom));}
+}
+</style>
 </head>
 <body class="authed">
 <div id="OVL"></div>
@@ -7753,10 +7769,10 @@ setTimeout(schedule,250);setTimeout(schedule,900);
   window.MedPlusMobileControlMenuSafe={sync:syncCustomMenus,open:function(el){setMenuOpen(true);ensureControlRoom(el)},close:function(){releaseSoon(0)}};
 })();
 </script>
-<script id="MPT-R11-2-49-IOS-SELECT-SHEET-JS">
+<script id="MPT-R11-2-50-IOS-SELECT-SHEET-JS">
 (function(){
   'use strict';
-  var sheet=null,current=null,lastOpenAt=0,searchInput=null,listEl=null,titleEl=null;
+  var sheet=null,current=null,searchInput=null,listEl=null,titleEl=null,suppressClickUntil=0;
   function isIOS(){
     var ua=navigator.userAgent||'';
     return /iPad|iPhone|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
@@ -7800,18 +7816,16 @@ setTimeout(schedule,250);setTimeout(schedule,900);
     if(!html)html='<div class="mpt-ios-select-empty">Không có lựa chọn</div>';
     listEl.innerHTML=html;
     var wrap=sheet.querySelector('.mpt-ios-select-search-wrap');
-    wrap.hidden=total<12;
-    searchInput.value='';
+    wrap.hidden=total<12;searchInput.value='';
     listEl.querySelectorAll('.mpt-ios-select-option').forEach(function(btn){
       btn.addEventListener('click',function(){
         if(!current||btn.disabled)return;
         var idx=parseInt(btn.getAttribute('data-index'),10);
         if(!Number.isFinite(idx)||!current.options[idx])return;
-        var changed=current.selectedIndex!==idx;
-        current.selectedIndex=idx;
-        if(changed){current.dispatchEvent(new Event('input',{bubbles:true}));current.dispatchEvent(new Event('change',{bubbles:true}))}
+        var sel=current,changed=sel.selectedIndex!==idx;
+        sel.selectedIndex=idx;
+        if(changed){sel.dispatchEvent(new Event('input',{bubbles:true}));sel.dispatchEvent(new Event('change',{bubbles:true}))}
         close();
-        try{current.focus({preventScroll:true})}catch(_e){}
       });
     });
     requestAnimationFrame(function(){var selected=listEl.querySelector('.mpt-ios-select-option.selected');if(selected)selected.scrollIntoView({block:'center'})});
@@ -7832,34 +7846,62 @@ setTimeout(schedule,250);setTimeout(schedule,900);
   }
   function open(sel){
     if(!eligible(sel))return false;
-    ensureSheet();current=sel;titleEl.textContent=fieldLabel(sel);build();sheet.classList.add('open');sheet.setAttribute('aria-hidden','false');lastOpenAt=Date.now();
+    ensureSheet();current=sel;titleEl.textContent=fieldLabel(sel);build();
+    document.body.classList.add('mpt-ios-select-open','mpt-control-menu-open');
+    sheet.classList.add('open');sheet.setAttribute('aria-hidden','false');
     if(window.MedPlusMobileControlMenuSafe&&window.MedPlusMobileControlMenuSafe.open)window.MedPlusMobileControlMenuSafe.open(sel);
     return true;
   }
   function close(){
-    if(!sheet||!sheet.classList.contains('open'))return;
-    sheet.classList.remove('open');sheet.setAttribute('aria-hidden','true');
-    var old=current;current=null;
+    if(sheet){sheet.classList.remove('open');sheet.setAttribute('aria-hidden','true')}
+    current=null;document.body.classList.remove('mpt-ios-select-open');
     if(window.MedPlusMobileControlMenuSafe&&window.MedPlusMobileControlMenuSafe.close)window.MedPlusMobileControlMenuSafe.close();
-    if(old)try{old.blur()}catch(_e){}
+    else document.body.classList.remove('mpt-control-menu-open');
   }
-  function intercept(e){
-    var sel=e.target&&e.target.closest?e.target.closest('select'):null;
-    if(!eligible(sel))return;
-    e.preventDefault();e.stopPropagation();
-    if(current===sel&&sheet&&sheet.classList.contains('open'))return;
-    open(sel);
+  function markSelects(root){
+    if(!isIOS()||!mobile())return;
+    var list=[];
+    if(root&&root.nodeType===1&&root.matches&&root.matches('select'))list.push(root);
+    if(root&&root.querySelectorAll)list=list.concat([].slice.call(root.querySelectorAll('select')));
+    list.forEach(function(sel){if(!sel.multiple&&!(sel.size&&sel.size>1))sel.classList.add('mpt-ios-select-guarded')});
   }
-  document.addEventListener('touchstart',intercept,{capture:true,passive:false});
-  document.addEventListener('pointerdown',function(e){if(e.pointerType==='touch'||e.pointerType==='pen')intercept(e)},true);
-  document.addEventListener('click',function(e){
-    var sel=e.target&&e.target.closest?e.target.closest('select'):null;
-    if(!eligible(sel))return;
-    e.preventDefault();e.stopImmediatePropagation();
-    if(!sheet||!sheet.classList.contains('open')||current!==sel)open(sel);
-  },true);
+  function unmarkSelects(){document.querySelectorAll('select.mpt-ios-select-guarded').forEach(function(sel){sel.classList.remove('mpt-ios-select-guarded')})}
+  function selectAt(x,y){
+    var best=null,bestArea=Infinity;
+    document.querySelectorAll('select.mpt-ios-select-guarded').forEach(function(sel){
+      if(!eligible(sel))return;
+      var r=sel.getBoundingClientRect();
+      if(r.width<2||r.height<2)return;
+      if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom){var area=r.width*r.height;if(area<bestArea){best=sel;bestArea=area}}
+    });
+    return best;
+  }
+  function touchGuard(e){
+    if(!isIOS()||!mobile()||!e.touches||!e.touches.length)return;
+    markSelects(document);
+    var t=e.touches[0],sel=selectAt(t.clientX,t.clientY);
+    if(!sel)return;
+    e.preventDefault();e.stopImmediatePropagation();suppressClickUntil=Date.now()+650;open(sel);
+  }
+  function clickGuard(e){
+    if(Date.now()>suppressClickUntil||!isIOS()||!mobile())return;
+    var sel=selectAt(e.clientX,e.clientY);
+    if(sel){e.preventDefault();e.stopImmediatePropagation()}
+  }
+  function init(){
+    if(isIOS()&&mobile())markSelects(document);else unmarkSelects();
+    var mo=new MutationObserver(function(muts){
+      if(!isIOS()||!mobile())return;
+      muts.forEach(function(m){m.addedNodes&&m.addedNodes.forEach(function(n){if(n.nodeType===1)markSelects(n)})});
+    });
+    mo.observe(document.documentElement,{childList:true,subtree:true});
+  }
+  document.addEventListener('touchstart',touchGuard,{capture:true,passive:false});
+  document.addEventListener('click',clickGuard,true);
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sheet&&sheet.classList.contains('open')){e.preventDefault();close()}},true);
-  window.addEventListener('orientationchange',function(){if(sheet&&sheet.classList.contains('open'))setTimeout(function(){var s=listEl.querySelector('.mpt-ios-select-option.selected');if(s)s.scrollIntoView({block:'center'})},180)});
+  window.addEventListener('orientationchange',function(){setTimeout(function(){if(isIOS()&&mobile())markSelects(document);else unmarkSelects()},120)});
+  window.addEventListener('resize',function(){if(isIOS()&&mobile())markSelects(document);else unmarkSelects()},{passive:true});
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
   window.MedPlusIOSSelectSheet={open:open,close:close,isIOS:isIOS};
 })();
 </script>
