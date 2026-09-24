@@ -1,6 +1,6 @@
 'use strict';
 const CACHE_PREFIX='medplus-pwa-';
-const CACHE_NAME=CACHE_PREFIX+'r11-2-47';
+const CACHE_NAME=CACHE_PREFIX+'r11-2-48';
 const INDEX_KEY='./index.html';
 const CONFIG_KEY='./config.js';
 const SHELL=['./',INDEX_KEY,CONFIG_KEY,'./manifest.webmanifest','./icons/medplus-192.png','./icons/medplus-512.png','./icons/medplus-180.png','./icons/medplus-maskable-512.png'];
