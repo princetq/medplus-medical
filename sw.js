@@ -1,6 +1,7 @@
 'use strict';
 const CACHE_PREFIX='medplus-pwa-';
-const CACHE_NAME=CACHE_PREFIX+'r11-2-49';
+const BUILD='R11.2.52';
+const CACHE_NAME=CACHE_PREFIX+'r11-2-52';
 const INDEX_KEY='./index.html';
 const CONFIG_KEY='./config.js';
 const SHELL=['./',INDEX_KEY,CONFIG_KEY,'./manifest.webmanifest','./icons/medplus-192.png','./icons/medplus-512.png','./icons/medplus-180.png','./icons/medplus-maskable-512.png'];
@@ -16,12 +17,24 @@ self.addEventListener('install',event=>{
   }).then(()=>self.skipWaiting()));
 });
 
+self.addEventListener('message',event=>{if(event.data&&event.data.type==='SKIP_WAITING')self.skipWaiting()});
+
 self.addEventListener('activate',event=>{
-  event.waitUntil(
-    caches.keys()
-      .then(keys=>Promise.all(keys.filter(k=>k.startsWith(CACHE_PREFIX)&&k!==CACHE_NAME).map(k=>caches.delete(k))))
-      .then(()=>self.clients.claim())
-  );
+  event.waitUntil((async()=>{
+    const keys=await caches.keys();
+    const old=keys.filter(k=>k.startsWith(CACHE_PREFIX)&&k!==CACHE_NAME);
+    await Promise.all(old.map(k=>caches.delete(k)));
+    await self.clients.claim();
+    if(old.length){
+      const wins=await self.clients.matchAll({type:'window',includeUncontrolled:true});
+      await Promise.all(wins.map(async c=>{
+        try{
+          const u=new URL(c.url);
+          if(u.origin===self.location.origin&&(u.pathname.endsWith('/')||u.pathname.endsWith('/index.html')))await c.navigate(c.url);
+        }catch(_e){}
+      }));
+    }
+  })());
 });
 
 function updateInBackground(cache,key,request){
