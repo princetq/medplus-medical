@@ -21,7 +21,7 @@ body:not(.mpt-auth-ok) #SB,body:not(.mpt-auth-ok) #MAIN,body:not(.mpt-auth-ok) #
 <script src="https://js.sentry-cdn.com/f7366affbaae7cdea59eb5a0be422a55.min.js" crossorigin="anonymous"></script>
 <script>if(typeof Sentry!=="undefined"){Sentry.onLoad(function(){Sentry.init({ignoreErrors:["ResizeObserver loop","top.GLOBALS",/extension\//i,/^chrome-extension:\/\//i,/^moz-extension:\/\//i,"The message port closed before a response was received","Lazy Scholar"],denyUrls:[/extensions\//i,/^chrome-extension:\/\//i,/^moz-extension:\/\//i]})})}else{console.info("[Sentry] Không tải được (có thể do ad-blocker) — app vẫn hoạt động bình thường.")}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="mpt-build" content="R11.2.45-ios-resume-auth-recovery">
+<meta name="mpt-build" content="R11.2.46-mobile-nav-dropdown-fix">
 <meta name="theme-color" content="#0B5F42">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -833,7 +833,21 @@ body:not(.mpt-auth-ok) #SB,body:not(.mpt-auth-ok) #MAIN,body:not(.mpt-auth-ok) #
   table.mpt-mobile-compact-table[data-mpt-cols="3"] td:first-child{width:auto!important;}
 }
 </style>
-</head>
+<style id="MPT-R11-2-46-MOBILE-CONTROL-MENU-SAFE">
+/* Mobile controls/dropdowns must not be covered by the floating glass navigation. */
+@media(max-width:768px){
+  body.mpt-control-menu-open #mpt-mobile-bottom{
+    opacity:0!important;visibility:hidden!important;pointer-events:none!important;
+  }
+  select,.dropdown-list,.mpt-dept-menu,.search-wrap,.fi,.agv2-field,.vbm-field,.vgn-field,.vcl-field,.vlt-field,.abx-fi,.aal-field,.form-group,.icu-field{
+    scroll-margin-bottom:calc(118px + env(safe-area-inset-bottom));
+  }
+  #pg-nelson .dropdown-list{
+    max-height:min(280px,calc(100dvh - 150px));
+    overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+  }
+}
+</style></head>
 <body class="authed">
 <div id="OVL"></div>
 
@@ -7611,5 +7625,88 @@ setTimeout(schedule,250);setTimeout(schedule,900);
 })();
 </script>
 
-</body>
+<script id="MPT-R11-2-46-MOBILE-CONTROL-MENU-SAFE-JS">
+(function(){
+  'use strict';
+  var releaseTimer=0;
+  function mobile(){return !!(window.matchMedia&&window.matchMedia('(max-width:768px)').matches)}
+  function setMenuOpen(on){
+    if(!document.body)return;
+    if(on&&mobile())document.body.classList.add('mpt-control-menu-open');
+    else document.body.classList.remove('mpt-control-menu-open');
+  }
+  function clearRelease(){if(releaseTimer){clearTimeout(releaseTimer);releaseTimer=0}}
+  function releaseSoon(ms){clearRelease();releaseTimer=setTimeout(function(){
+    var active=document.activeElement;
+    var nativeSelect=active&&active.tagName==='SELECT';
+    var custom=document.querySelector('.dropdown-list.show,.mpt-dept-menu:not([hidden])');
+    if(!nativeSelect&&!custom)setMenuOpen(false);
+  },ms==null?180:ms)}
+  function ensureControlRoom(el){
+    if(!mobile()||!el||!el.getBoundingClientRect)return;
+    var vv=window.visualViewport;
+    var h=vv?vv.height:window.innerHeight;
+    var r=el.getBoundingClientRect();
+    var limit=h-118;
+    if(r.bottom>limit){
+      var dy=Math.min(r.bottom-limit+20,Math.max(0,r.top-16));
+      if(dy>4)window.scrollBy({top:dy,behavior:'smooth'});
+    }
+  }
+  function placeDropdown(menu){
+    if(!mobile()||!menu)return;
+    var wrap=menu.closest('.search-wrap,.mpt-dept-picker');
+    if(!wrap)return;
+    var anchor=wrap.querySelector('input,button,select')||wrap;
+    var r=anchor.getBoundingClientRect();
+    var vv=window.visualViewport;
+    var h=vv?vv.height:window.innerHeight;
+    var below=Math.max(0,h-r.bottom-12);
+    var above=Math.max(0,r.top-12);
+    var useAbove=below<180&&above>below;
+    menu.style.maxHeight=Math.max(120,Math.min(280,(useAbove?above:below)-8))+'px';
+    if(useAbove){menu.style.top='auto';menu.style.bottom='calc(100% + 6px)'}
+    else{menu.style.top='calc(100% + 6px)';menu.style.bottom='auto'}
+  }
+  function syncCustomMenus(){
+    if(!mobile()){setMenuOpen(false);return}
+    var openMenus=[].slice.call(document.querySelectorAll('.dropdown-list.show,.mpt-dept-menu:not([hidden])'));
+    if(openMenus.length){
+      clearRelease();setMenuOpen(true);openMenus.forEach(placeDropdown);
+    }else releaseSoon(100);
+  }
+  function observeMenus(){
+    document.querySelectorAll('.dropdown-list,.mpt-dept-menu').forEach(function(menu){
+      if(menu.dataset.mptSafeObserved)return;
+      menu.dataset.mptSafeObserved='1';
+      new MutationObserver(syncCustomMenus).observe(menu,{attributes:true,attributeFilter:['class','hidden']});
+    });
+  }
+  document.addEventListener('pointerdown',function(e){
+    var sel=e.target&&e.target.closest?e.target.closest('select'):null;
+    if(!sel||!mobile())return;
+    clearRelease();setMenuOpen(true);ensureControlRoom(sel);
+  },true);
+  document.addEventListener('focusin',function(e){
+    if(e.target&&e.target.tagName==='SELECT'&&mobile()){
+      clearRelease();setMenuOpen(true);ensureControlRoom(e.target);
+    }
+  },true);
+  document.addEventListener('change',function(e){
+    if(e.target&&e.target.tagName==='SELECT')releaseSoon(220);
+  },true);
+  document.addEventListener('focusout',function(e){
+    if(e.target&&e.target.tagName==='SELECT')releaseSoon(220);
+  },true);
+  document.addEventListener('input',function(e){
+    if(e.target&&e.target.closest&&e.target.closest('.search-wrap,.mpt-dept-picker'))setTimeout(syncCustomMenus,0);
+  },true);
+  document.addEventListener('click',function(){setTimeout(function(){observeMenus();syncCustomMenus()},0)},true);
+  window.addEventListener('resize',function(){if(mobile())syncCustomMenus();else setMenuOpen(false)});
+  if(window.visualViewport)window.visualViewport.addEventListener('resize',syncCustomMenus);
+  function init(){observeMenus();syncCustomMenus()}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+  window.MedPlusMobileControlMenuSafe={sync:syncCustomMenus,open:function(el){setMenuOpen(true);ensureControlRoom(el)},close:function(){releaseSoon(0)}};
+})();
+</script></body>
 </html>
