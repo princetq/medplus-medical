@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0B5F42">
+<title>Khôi phục MedPlus</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#f3f8f5;color:#173d30}body{min-height:100vh;display:grid;place-items:center;padding:20px}.card{width:min(480px,100%);background:#fff;border:1px solid #cfe3d7;border-radius:18px;padding:26px;box-shadow:0 18px 50px rgba(13,70,48,.12);text-align:center}.logo{width:58px;height:58px;border-radius:16px;margin:0 auto 14px;background:linear-gradient(145deg,#39C77F,#16875B);color:#fff;display:grid;place-items:center;font-size:28px;font-weight:800}.title{font-size:22px;font-weight:800;color:#0B5F42}.msg{margin-top:10px;line-height:1.6;color:#587066}.spin{width:30px;height:30px;margin:18px auto 0;border:3px solid #d8ebe2;border-top-color:#16875B;border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}button{display:none;margin:18px auto 0;border:0;border-radius:10px;padding:11px 16px;background:#16875B;color:#fff;font:700 15px inherit;cursor:pointer}
+</style>
+</head>
+<body><main class="card"><div class="logo">+</div><div class="title">Đang khôi phục MedPlus</div><div class="msg" id="msg">Đang xóa shell PWA bị lỗi và nạp lại bản ổn định</div><div class="spin" id="spin"></div><button id="retry" type="button">Thử lại</button></main>
+<script>
+(function(){
+  'use strict';
+  var msg=document.getElementById('msg'),spin=document.getElementById('spin'),retry=document.getElementById('retry');
+  async function recover(){
+    retry.style.display='none';spin.style.display='block';msg.textContent='Đang xóa shell PWA bị lỗi và nạp lại bản ổn định';
+    try{
+      if('serviceWorker' in navigator){var regs=await navigator.serviceWorker.getRegistrations();await Promise.all(regs.map(function(r){return r.unregister()}))}
+      if(window.caches&&caches.keys){var keys=await caches.keys();await Promise.all(keys.filter(function(k){return k.indexOf('medplus-pwa-')===0}).map(function(k){return caches.delete(k)}))}
+      msg.textContent='Đã làm sạch bộ nhớ PWA · đang mở lại MedPlus';
+      setTimeout(function(){location.replace('./?recovered=11248&_='+Date.now())},500);
+    }catch(e){spin.style.display='none';retry.style.display='inline-block';msg.textContent='Chưa thể tự khôi phục: '+(e&&e.message||e)}
+  }
+  retry.addEventListener('click',recover);recover();
+})();
+</script></body></html>
