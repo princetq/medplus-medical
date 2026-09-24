@@ -1,6 +1,6 @@
 'use strict';
 const CACHE_PREFIX='medplus-pwa-';
-const CACHE_NAME=CACHE_PREFIX+'r11-2-45';
+const CACHE_NAME=CACHE_PREFIX+'r11-2-46';
 const SHELL=['./','./index.html','./manifest.webmanifest','./icons/medplus-192.png','./icons/medplus-512.png','./icons/medplus-180.png','./icons/medplus-maskable-512.png'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting()));
