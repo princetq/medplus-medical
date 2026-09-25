@@ -967,16 +967,16 @@ body:not(.mpt-auth-ok) #SB,body:not(.mpt-auth-ok) #MAIN,body:not(.mpt-auth-ok) #
     <div class="nav-lbl" data-mpt-tools="renal">Chức năng thận &amp; IBW/ABW</div>
     <div class="ni" data-pg="renal" data-mpt-tools="renal"><span class="ni-ico mpt-renal-ni"><svg class="mpt-renal-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.4 4.8c-3.4.1-5.3 2.9-5.1 6.5.2 4.2 2.6 7.6 5.9 7.4 2.2-.1 3.4-1.8 3.2-4.3l-.3-6.1c-.1-2.1-1.6-3.6-3.7-3.5Z"/><path d="M14.6 4.8c3.4.1 5.3 2.9 5.1 6.5-.2 4.2-2.6 7.6-5.9 7.4-2.2-.1-3.4-1.8-3.2-4.3l.3-6.1c.1-2.1 1.6-3.6 3.7-3.5Z"/><path d="M9.2 9.2c1.2.4 2 1.4 2.1 2.8M14.8 9.2c-1.2.4-2 1.4-2.1 2.8"/></svg></span>CrCl / eGFR / IBW / ABW</div>
 
-    <div class="nav-lbl" data-mpt-tools="vanco amino colistin abxdose nelson abxempiric vkabx abxallergy sapabx ivpo">CHƯƠNG TRÌNH QUẢN LÝ KHÁNG SINH</div>
-    <div class="ni" data-pg="vanco" data-mpt-tools="vanco"><span class="ni-ico">💉</span>Vancomycin <span class="ni-badge">PK</span></div>
-    <div class="ni" data-pg="amino" data-mpt-tools="amino"><span class="ni-ico">🔬</span>Aminoglycoside</div>
-    <div class="ni" data-pg="colistin" data-mpt-tools="colistin"><span class="ni-ico">🧪</span>Colistin (CMS)</div>
-    <div class="ni" data-pg="abxdose" data-mpt-tools="abxdose"><span class="ni-ico">💊</span>Hiệu chỉnh liều kháng sinh <span class="ni-badge">70</span></div>
-    <div class="ni" data-pg="nelson" data-mpt-tools="nelson"><span class="ni-ico">🍼</span>Tính liều KS Nhi <span class="ni-badge">62</span></div>
+    <div class="nav-lbl" data-mpt-tools="abxempiric vkabx abxallergy sapabx abxdose nelson vanco amino colistin ivpo">CHƯƠNG TRÌNH QUẢN LÝ KHÁNG SINH</div>
     <div class="ni" data-pg="abxempiric" data-mpt-tools="abxempiric"><span class="ni-ico">🧭</span>Lựa chọn KS kinh nghiệm</div>
     <div class="ni" data-pg="vkabx" data-mpt-tools="vkabx"><span class="ni-ico">🧫</span>Lựa chọn KS theo Vi khuẩn</div>
     <div class="ni" data-pg="abxallergy" data-mpt-tools="abxallergy"><span class="ni-ico">🚨</span>Đánh giá Dị ứng Kháng sinh</div>
     <div class="ni" data-pg="sapabx" data-mpt-tools="sapabx"><span class="ni-ico">🔪</span>KS Dự phòng Phẫu thuật</div>
+    <div class="ni" data-pg="abxdose" data-mpt-tools="abxdose"><span class="ni-ico">💊</span>Hiệu chỉnh liều kháng sinh <span class="ni-badge">70</span></div>
+    <div class="ni" data-pg="nelson" data-mpt-tools="nelson"><span class="ni-ico">🍼</span>Tính liều KS Nhi <span class="ni-badge">62</span></div>
+    <div class="ni" data-pg="vanco" data-mpt-tools="vanco"><span class="ni-ico">💉</span>Vancomycin <span class="ni-badge">PK</span></div>
+    <div class="ni" data-pg="amino" data-mpt-tools="amino"><span class="ni-ico">🔬</span>Aminoglycoside</div>
+    <div class="ni" data-pg="colistin" data-mpt-tools="colistin"><span class="ni-ico">🧪</span>Colistin (CMS)</div>
     <div class="ni" data-pg="ivpo" data-mpt-tools="ivpo"><span class="ni-ico">🔄</span>Chuyển đổi KS IV → PO</div>
 
     <div class="nav-lbl" data-mpt-tools="levo la heparin insulin phenytoin warfarin">Tính liều thuốc chuyên biệt</div>
@@ -1065,36 +1065,8 @@ body:not(.mpt-auth-ok) #SB,body:not(.mpt-auth-ok) #MAIN,body:not(.mpt-auth-ok) #
   </div>
 
   <!-- NHÓM 2: CHƯƠNG TRÌNH QUẢN LÝ KHÁNG SINH (TDM, hiệu chỉnh suy thận, Nhi khoa) -->
-  <div class="st" data-mpt-tools="vanco amino colistin abxdose nelson abxempiric vkabx abxallergy sapabx ivpo" style="margin-top:18px">💉 CHƯƠNG TRÌNH QUẢN LÝ KHÁNG SINH</div>
-  <div class="mod-grid" data-mpt-tools="vanco amino colistin abxdose nelson abxempiric vkabx abxallergy sapabx ivpo" style="margin-top:10px">
-    <div class="mod-card mc-b" data-mpt-tools="vanco" onclick="showPg('vanco')">
-      <div class="mc-cnt">AUC Bayesian</div>
-      <div class="mc-ico">💉</div>
-      <div class="mc-name">Vancomycin</div>
-      <div class="mc-desc">Liều khởi đầu · AUC₂₄/MIC · TDM 2-điểm · ASHP 2020</div>
-    </div>
-    <div class="mod-card mc-g" data-mpt-tools="amino" onclick="showPg('amino')">
-      <div class="mc-ico">🔬</div>
-      <div class="mc-name">Aminoglycoside</div>
-      <div class="mc-desc">Liều truyền thống (MDD) · EID Hartford Nomogram</div>
-    </div>
-    <div class="mod-card mc-g" data-mpt-tools="colistin" onclick="showPg('colistin')">
-      <div class="mc-ico">🧪</div>
-      <div class="mc-name">Colistin (CMS)</div>
-      <div class="mc-desc">Loading dose · Maintenance · Suy thận · CRRT</div>
-    </div>
-    <div class="mod-card mc-b" data-mpt-tools="abxdose" onclick="showPg('abxdose')">
-      <div class="mc-cnt">70 kháng sinh</div>
-      <div class="mc-ico">💊</div>
-      <div class="mc-name">Hiệu chỉnh liều kháng sinh</div>
-      <div class="mc-desc">70 hoạt chất · CrCl Cockcroft-Gault · IHD · CRRT · TH-70 2026</div>
-    </div>
-    <div class="mod-card mc-t" data-mpt-tools="nelson" onclick="showPg('nelson')">
-      <div class="mc-cnt">62 kháng sinh</div>
-      <div class="mc-ico">🍼</div>
-      <div class="mc-name">Tính liều KS Nhi</div>
-      <div class="mc-desc">Sơ sinh &amp; Nhi khoa · Phân loại theo tuổi/cân nặng</div>
-    </div>
+  <div class="st" data-mpt-tools="abxempiric vkabx abxallergy sapabx abxdose nelson vanco amino colistin ivpo" style="margin-top:18px">💉 CHƯƠNG TRÌNH QUẢN LÝ KHÁNG SINH</div>
+  <div class="mod-grid" data-mpt-tools="abxempiric vkabx abxallergy sapabx abxdose nelson vanco amino colistin ivpo" style="margin-top:10px">
     <div class="mod-card mc-g" data-mpt-tools="abxempiric" onclick="showPg('abxempiric')">
       <div class="mc-ico">🧭</div>
       <div class="mc-name">Lựa chọn KS Kinh nghiệm</div>
@@ -1115,6 +1087,34 @@ body:not(.mpt-auth-ok) #SB,body:not(.mpt-auth-ok) #MAIN,body:not(.mpt-auth-ok) #
       <div class="mc-ico">🔪</div>
       <div class="mc-name">KS Dự phòng Phẫu thuật</div>
       <div class="mc-desc">50 mục · Singapore National Antimicrobial Guideline</div>
+    </div>
+    <div class="mod-card mc-b" data-mpt-tools="abxdose" onclick="showPg('abxdose')">
+      <div class="mc-cnt">70 kháng sinh</div>
+      <div class="mc-ico">💊</div>
+      <div class="mc-name">Hiệu chỉnh liều kháng sinh</div>
+      <div class="mc-desc">70 hoạt chất · CrCl Cockcroft-Gault · IHD · CRRT · TH-70 2026</div>
+    </div>
+    <div class="mod-card mc-t" data-mpt-tools="nelson" onclick="showPg('nelson')">
+      <div class="mc-cnt">62 kháng sinh</div>
+      <div class="mc-ico">🍼</div>
+      <div class="mc-name">Tính liều KS Nhi</div>
+      <div class="mc-desc">Sơ sinh &amp; Nhi khoa · Phân loại theo tuổi/cân nặng</div>
+    </div>
+    <div class="mod-card mc-b" data-mpt-tools="vanco" onclick="showPg('vanco')">
+      <div class="mc-cnt">AUC Bayesian</div>
+      <div class="mc-ico">💉</div>
+      <div class="mc-name">Vancomycin</div>
+      <div class="mc-desc">Liều khởi đầu · AUC₂₄/MIC · TDM 2-điểm · ASHP 2020</div>
+    </div>
+    <div class="mod-card mc-g" data-mpt-tools="amino" onclick="showPg('amino')">
+      <div class="mc-ico">🔬</div>
+      <div class="mc-name">Aminoglycoside</div>
+      <div class="mc-desc">Liều truyền thống (MDD) · EID Hartford Nomogram</div>
+    </div>
+    <div class="mod-card mc-g" data-mpt-tools="colistin" onclick="showPg('colistin')">
+      <div class="mc-ico">🧪</div>
+      <div class="mc-name">Colistin (CMS)</div>
+      <div class="mc-desc">Loading dose · Maintenance · Suy thận · CRRT</div>
     </div>
     <div class="mod-card mc-b" data-mpt-tools="ivpo" onclick="showPg('ivpo')">
       <div class="mc-ico">🔄</div>
@@ -4489,15 +4489,15 @@ body:not(.mpt-auth-ok) #SB,body:not(.mpt-auth-ok) #MAIN,body:not(.mpt-auth-ok) #
     <div class="mpt-no-tools" id="mpt-guide-no-tools" hidden>Tài khoản hiện chưa được cấp công cụ lâm sàng nào. Bạn vẫn có thể đọc hướng dẫn chung và tra cứu từ viết tắt.</div>
     <div style="display:grid;gap:8px;font-size:14.5px">
       <div class="ir" data-mpt-tools="renal"><strong><span class="mpt-renal-inline"><svg class="mpt-renal-svg" viewbox="0 0 24 24" aria-hidden="true"><path d="M9.4 4.8c-3.4.1-5.3 2.9-5.1 6.5.2 4.2 2.6 7.6 5.9 7.4 2.2-.1 3.4-1.8 3.2-4.3l-.3-6.1c-.1-2.1-1.6-3.6-3.7-3.5Z"></path><path d="M14.6 4.8c3.4.1 5.3 2.9 5.1 6.5-.2 4.2-2.6 7.6-5.9 7.4-2.2-.1-3.4-1.8-3.2-4.3l.3-6.1c.1-2.1 1.6-3.6 3.7-3.5Z"></path><path d="M9.2 9.2c1.2.4 2 1.4 2.1 2.8M14.8 9.2c-1.2.4-2 1.4-2.1 2.8"></path></svg></span> Chức năng thận &amp; IBW/ABW</strong><span>CrCl Cockcroft-Gault · eGFR CKD-EPI (race-free) · IBW (Devine) · ABW</span></div>
-      <div class="ir" data-mpt-tools="vanco"><strong>💉 Vancomycin PK/TDM</strong><span>Liều khởi đầu GAPP Nomogram · TDM Bayesian AUC/MIC · ASHP/IDSA/SIDP 2020</span></div>
-      <div class="ir" data-mpt-tools="amino"><strong>🔬 Aminoglycoside</strong><span>2 tab: Người lớn (CrCl tự động ABW · Extended-Interval · MDD · Synergy · HD/CRRT · Hiệu chỉnh PK 2 điểm) &amp; Trẻ em (Schwartz eGFR · Sơ sinh · Nhi khoa) · Stanford SHC + UNC</span></div>
-      <div class="ir" data-mpt-tools="colistin"><strong>🧪 Colistin (CMS)</strong><span>Loading dose · Maintenance · Hiệu chỉnh suy thận · CRRT · Tsuji 2019</span></div>
-      <div class="ir" data-mpt-tools="abxdose"><strong>💊 Hiệu chỉnh liều kháng sinh</strong><span>70 kháng sinh · CrCl Cockcroft-Gault · IHD · CRRT · TH-70 2026</span></div>
-      <div class="ir" data-mpt-tools="nelson"><strong>🍼 Tính liều KS Nhi</strong><span>62 kháng sinh · Sơ sinh &amp; Nhi khoa theo tuổi/cân nặng</span></div>
       <div class="ir" data-mpt-tools="abxempiric"><strong>🧭 Lựa chọn KS theo Kinh nghiệm</strong><span>Wizard 5 bước · Người lớn/Trẻ em/Sơ sinh · 11 vị trí nhiễm khuẩn · Nguy cơ MDR · Dị ứng beta-lactam · ATS/IDSA, ESC, ESCMID</span></div>
       <div class="ir" data-mpt-tools="vkabx"><strong>🧫 Lựa chọn KS theo Vi khuẩn</strong><span>112 vi khuẩn · Tìm kiếm theo tên vi khuẩn/kháng sinh · 5 nhóm tra cứu nhanh · KS đầu tay/thay thế · Liều NL/TE/TSS · Cunha, Nelson, IDSA 2026</span></div>
       <div class="ir" data-mpt-tools="abxallergy"><strong>🚨 Đánh giá Dị ứng Kháng sinh</strong><span>Tiền sử dị ứng Penicillin/Beta-lactam · Phân tầng nguy cơ (rất thấp/thấp/cao) · Dị ứng chéo theo chuỗi bên · Khuyến cáo xử trí · ESCMID 2026</span></div>
       <div class="ir" data-mpt-tools="sapabx"><strong>🔪 KS Dự phòng Phẫu thuật</strong><span>50 mục · Singapore National Antimicrobial Guideline · Liều theo cân nặng/thời gian phẫu thuật</span></div>
+      <div class="ir" data-mpt-tools="abxdose"><strong>💊 Hiệu chỉnh liều kháng sinh</strong><span>70 kháng sinh · CrCl Cockcroft-Gault · IHD · CRRT · TH-70 2026</span></div>
+      <div class="ir" data-mpt-tools="nelson"><strong>🍼 Tính liều KS Nhi</strong><span>62 kháng sinh · Sơ sinh &amp; Nhi khoa theo tuổi/cân nặng</span></div>
+      <div class="ir" data-mpt-tools="vanco"><strong>💉 Vancomycin PK/TDM</strong><span>Liều khởi đầu GAPP Nomogram · TDM Bayesian AUC/MIC · ASHP/IDSA/SIDP 2020</span></div>
+      <div class="ir" data-mpt-tools="amino"><strong>🔬 Aminoglycoside</strong><span>2 tab: Người lớn (CrCl tự động ABW · Extended-Interval · MDD · Synergy · HD/CRRT · Hiệu chỉnh PK 2 điểm) &amp; Trẻ em (Schwartz eGFR · Sơ sinh · Nhi khoa) · Stanford SHC + UNC</span></div>
+      <div class="ir" data-mpt-tools="colistin"><strong>🧪 Colistin (CMS)</strong><span>Loading dose · Maintenance · Hiệu chỉnh suy thận · CRRT · Tsuji 2019</span></div>
       <div class="ir" data-mpt-tools="ivpo"><strong>🔄 Chuyển đổi KS IV → PO</strong><span>6 tiêu chí chuyển đổi (QĐ 5631/QĐ-BYT) · 22 chỉ định lâm sàng · Người lớn &amp; Trẻ em</span></div>
       <div class="ir" data-mpt-tools="levo"><strong>🦋 Levothyroxin</strong><span>Tính liều ban đầu · Hiệu chỉnh theo TSH/FT4 · Theo dõi TDM</span></div>
       <div class="ir" data-mpt-tools="la"><strong>🩹 Gây tê cục bộ</strong><span>Liều tối đa Lidocain · Bupivacain · Ropivacain (có/không adrenalin)</span></div>
@@ -7092,7 +7092,7 @@ body:not(.mpt-auth-ok) #SB,body:not(.mpt-auth-ok) #MAIN,body:not(.mpt-auth-ok) #
 <div id="mpt-auth-gate"><div class="mpt-auth-card"><div class="mpt-auth-logo"><svg viewBox="0 0 24 24"><path d="M12 21S3.5 16.2 3.5 8.9C3.5 5.2 6 3 8.9 3c1.6 0 2.8.7 3.8 2 1-1.3 2.2-2 3.8-2 2.9 0 5.4 2.2 5.4 5.9C21.9 16.2 13.4 21 13.4 21Z"/><path d="M9 9h6M12 6v6"/></svg></div><div class="mpt-auth-title" id="mpt-auth-title">MedPlus Medical Tools</div><div class="mpt-auth-tagline">Hệ thống hỗ trợ ra quyết định Dược lâm sàng dựa trên y học chứng cứ (EBM)</div><div class="mpt-auth-status" id="mpt-auth-status">Đang kết nối hệ thống phân quyền…</div><div id="mpt-google-login"></div><div class="mpt-auth-progress" id="mpt-auth-progress" aria-live="polite"><div class="mpt-auth-spinner" aria-hidden="true"></div><div class="mpt-auth-progress-text">Đã xác thực Google · đang mở MedPlus…</div></div><button class="mpt-register-open" id="mpt-open-register" type="button">Đăng ký tài khoản</button><div class="mpt-register-hint">Dành cho các khoa chưa có tài khoản MedPlus hoặc cần gửi yêu cầu cấp quyền mới</div><div class="mpt-auth-config" id="mpt-auth-config"></div><div class="mpt-auth-footer">Khoa Dược - BVĐK Tuyên Quang</div></div></div><div class="mpt-register-backdrop" id="mpt-register-modal" aria-hidden="true"><section class="mpt-register-card" role="dialog" aria-modal="true" aria-labelledby="mpt-register-title"><div class="mpt-register-head"><div class="mpt-register-head-main"><div class="mpt-register-title" id="mpt-register-title">Đăng ký tài khoản MedPlus</div><div class="mpt-register-desc">Điền đầy đủ Họ và tên, Khoa/Phòng, xác thực tài khoản Google rồi gửi yêu cầu cấp quyền.</div></div><button class="mpt-register-close" id="mpt-register-close" type="button" aria-label="Đóng">×</button></div><div id="mpt-register-form-area"><div class="mpt-register-grid"><div class="mpt-register-field"><label for="mpt-register-name">Họ và tên <span class="mpt-register-required">*</span></label><input id="mpt-register-name" type="text" autocomplete="name" placeholder="Nguyễn Văn A" required></div><div class="mpt-register-field"><label for="mpt-register-dept-trigger">Khoa / Phòng <span class="mpt-register-required">*</span></label><div class="mpt-dept-picker" id="mpt-register-dept-picker"><button class="mpt-dept-trigger" id="mpt-register-dept-trigger" type="button" aria-haspopup="listbox" aria-expanded="false"><span id="mpt-register-dept-label">— Chọn Khoa / Phòng —</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></button><input id="mpt-register-department" type="hidden" value=""><div class="mpt-dept-menu" id="mpt-register-dept-menu" hidden><div class="mpt-dept-search-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg><input id="mpt-register-dept-search" type="search" autocomplete="off" spellcheck="false" placeholder="Tìm Khoa / Phòng…" aria-label="Tìm Khoa / Phòng"></div><div class="mpt-dept-list" id="mpt-register-dept-list" role="listbox" aria-label="Danh sách Khoa / Phòng"></div><div class="mpt-dept-empty" id="mpt-register-dept-empty" hidden>Không tìm thấy Khoa / Phòng phù hợp.</div></div></div></div><div class="mpt-register-field full"><label for="mpt-register-note">Ghi chú (không bắt buộc)</label><textarea id="mpt-register-note" placeholder="Ví dụ: Dược sĩ phụ trách khoa, nhu cầu sử dụng MedPlus…"></textarea></div></div><div class="mpt-register-auth" id="mpt-register-auth-area"><div class="mpt-register-auth-title">Xác thực tài khoản Google đăng ký</div><div class="mpt-register-auth-lock" id="mpt-register-auth-lock">Vui lòng nhập Họ và tên và chọn Khoa / Phòng trước.</div><div id="mpt-register-google"></div><div class="mpt-register-google-state" id="mpt-register-google-state">Chưa xác thực tài khoản Google.</div></div><button class="mpt-register-submit" id="mpt-register-submit" type="button" disabled>Đăng ký cấp quyền</button><div class="mpt-register-status" id="mpt-register-status">Họ và tên và Khoa / Phòng là thông tin bắt buộc.</div><div class="mpt-register-note" id="mpt-register-footer-note">Yêu cầu chỉ có hiệu lực sau khi Quản trị MedPlus phê duyệt và cấp vai trò/công cụ.</div></div><div class="mpt-register-success" id="mpt-register-success"><div class="mpt-register-success-icon">✓</div><div class="mpt-register-success-title">Đăng ký thành công, chờ phê duyệt</div><div class="mpt-register-success-text" id="mpt-register-success-text">Yêu cầu cấp quyền đã được ghi nhận. Quản trị MedPlus sẽ nhận email thông báo và phê duyệt tài khoản trước khi bạn có thể đăng nhập sử dụng công cụ.</div><button class="mpt-register-success-close" id="mpt-register-success-close" type="button">Đóng</button></div></section></div>
 <script id="MPT-R11-AUTH-RUNTIME">
 (function(){'use strict';
-var TOOL_CATALOG=[{"id":"renal","label":"CrCl / eGFR / IBW / ABW","group":"Dược động học & TDM"},{"id":"vanco","label":"Vancomycin PK/TDM","group":"Dược động học & TDM"},{"id":"amino","label":"Aminoglycoside","group":"Dược động học & TDM"},{"id":"colistin","label":"Colistin (CMS)","group":"Dược động học & TDM"},{"id":"phenytoin","label":"Phenytoin TDM","group":"Dược động học & TDM"},{"id":"abxdose","label":"Hiệu chỉnh liều kháng sinh","group":"Kháng sinh & nhiễm khuẩn"},{"id":"nelson","label":"Tính liều kháng sinh Nhi","group":"Kháng sinh & nhiễm khuẩn"},{"id":"abxempiric","label":"Lựa chọn kháng sinh kinh nghiệm","group":"Kháng sinh & nhiễm khuẩn"},{"id":"vkabx","label":"Lựa chọn kháng sinh theo vi khuẩn","group":"Kháng sinh & nhiễm khuẩn"},{"id":"abxallergy","label":"Đánh giá dị ứng kháng sinh","group":"Kháng sinh & nhiễm khuẩn"},{"id":"sapabx","label":"Kháng sinh dự phòng phẫu thuật","group":"Kháng sinh & nhiễm khuẩn"},{"id":"ivpo","label":"Chuyển đổi kháng sinh IV → PO","group":"Kháng sinh & nhiễm khuẩn"},{"id":"levo","label":"Levothyroxine","group":"Liều & quy đổi"},{"id":"la","label":"Liều tối đa thuốc gây tê","group":"Liều & quy đổi"},{"id":"heparin","label":"Heparin UFH & LMWH","group":"Liều & quy đổi"},{"id":"insulin","label":"Insulin & phác đồ","group":"Liều & quy đổi"},{"id":"warfarin","label":"Warfarin & INR","group":"Liều & quy đổi"},{"id":"opioid","label":"Quy đổi opioid (MEDD)","group":"Liều & quy đổi"},{"id":"corticoid","label":"Quy đổi corticosteroid","group":"Liều & quy đổi"},{"id":"benzo","label":"Quy đổi benzodiazepine","group":"Liều & quy đổi"},{"id":"scores","label":"SOFA / APACHE II / GCS","group":"Thang điểm & hồi sức"},{"id":"cha2ds2","label":"CHA₂DS₂-VASc / CURB-65","group":"Thang điểm & hồi sức"},{"id":"news2","label":"NEWS2","group":"Thang điểm & hồi sức"},{"id":"dapt","label":"DAPT / HAS-BLED","group":"Thang điểm & hồi sức"},{"id":"nutrition","label":"TPN / EN Calculator","group":"Thang điểm & hồi sức"},{"id":"ivfluid","label":"Dịch truyền IV","group":"Thang điểm & hồi sức"},{"id":"electrolyte","label":"Bù điện giải","group":"Thang điểm & hồi sức"},{"id":"icuinfusion","label":"Tốc độ truyền thuốc ICU","group":"Thang điểm & hồi sức"},{"id":"druginfo","label":"Thông tin thuốc ICU","group":"Tra cứu dược"},{"id":"interaction","label":"Tương tác thuốc","group":"Tra cứu dược"},{"id":"inject","label":"Pha & bảo quản thuốc tiêm","group":"Tra cứu dược"},{"id":"pregnancy","label":"Thuốc & thai kỳ / cho con bú","group":"Tra cứu dược"}];
+var TOOL_CATALOG=[{"id":"renal","label":"CrCl / eGFR / IBW / ABW","group":"Dược động học & TDM"},{"id":"abxempiric","label":"Lựa chọn kháng sinh kinh nghiệm","group":"Kháng sinh & nhiễm khuẩn"},{"id":"vkabx","label":"Lựa chọn kháng sinh theo vi khuẩn","group":"Kháng sinh & nhiễm khuẩn"},{"id":"abxallergy","label":"Đánh giá dị ứng kháng sinh","group":"Kháng sinh & nhiễm khuẩn"},{"id":"sapabx","label":"Kháng sinh dự phòng phẫu thuật","group":"Kháng sinh & nhiễm khuẩn"},{"id":"abxdose","label":"Hiệu chỉnh liều kháng sinh","group":"Kháng sinh & nhiễm khuẩn"},{"id":"nelson","label":"Tính liều kháng sinh Nhi","group":"Kháng sinh & nhiễm khuẩn"},{"id":"vanco","label":"Vancomycin PK/TDM","group":"Dược động học & TDM"},{"id":"amino","label":"Aminoglycoside","group":"Dược động học & TDM"},{"id":"colistin","label":"Colistin (CMS)","group":"Dược động học & TDM"},{"id":"ivpo","label":"Chuyển đổi kháng sinh IV → PO","group":"Kháng sinh & nhiễm khuẩn"},{"id":"phenytoin","label":"Phenytoin TDM","group":"Dược động học & TDM"},{"id":"levo","label":"Levothyroxine","group":"Liều & quy đổi"},{"id":"la","label":"Liều tối đa thuốc gây tê","group":"Liều & quy đổi"},{"id":"heparin","label":"Heparin UFH & LMWH","group":"Liều & quy đổi"},{"id":"insulin","label":"Insulin & phác đồ","group":"Liều & quy đổi"},{"id":"warfarin","label":"Warfarin & INR","group":"Liều & quy đổi"},{"id":"opioid","label":"Quy đổi opioid (MEDD)","group":"Liều & quy đổi"},{"id":"corticoid","label":"Quy đổi corticosteroid","group":"Liều & quy đổi"},{"id":"benzo","label":"Quy đổi benzodiazepine","group":"Liều & quy đổi"},{"id":"scores","label":"SOFA / APACHE II / GCS","group":"Thang điểm & hồi sức"},{"id":"cha2ds2","label":"CHA₂DS₂-VASc / CURB-65","group":"Thang điểm & hồi sức"},{"id":"news2","label":"NEWS2","group":"Thang điểm & hồi sức"},{"id":"dapt","label":"DAPT / HAS-BLED","group":"Thang điểm & hồi sức"},{"id":"nutrition","label":"TPN / EN Calculator","group":"Thang điểm & hồi sức"},{"id":"ivfluid","label":"Dịch truyền IV","group":"Thang điểm & hồi sức"},{"id":"electrolyte","label":"Bù điện giải","group":"Thang điểm & hồi sức"},{"id":"icuinfusion","label":"Tốc độ truyền thuốc ICU","group":"Thang điểm & hồi sức"},{"id":"druginfo","label":"Thông tin thuốc ICU","group":"Tra cứu dược"},{"id":"interaction","label":"Tương tác thuốc","group":"Tra cứu dược"},{"id":"inject","label":"Pha & bảo quản thuốc tiêm","group":"Tra cứu dược"},{"id":"pregnancy","label":"Thuốc & thai kỳ / cho con bú","group":"Tra cứu dược"}];
 var TOKEN_KEY='MPT_R10_USER_TOKEN';
 var BACKEND=String(window.MEDPLUS_AUTH_BACKEND_URL||'').trim();
 var pending={},revalidateTimer=null,cfgCache=null,cfgPromise=null,gsiLoadPromise=null;
