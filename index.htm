@@ -928,6 +928,31 @@ body:not(.mpt-auth-ok) #SB,body:not(.mpt-auth-ok) #MAIN,body:not(.mpt-auth-ok) #
   #pg-ivpo .ivpo-dx-table{border-collapse:collapse!important;}
 }
 </style>
+<style id="MPT-R11-2-67-MOBILE-OVERFLOW">
+/* Keep tool content within its viewport while wide clinical tables scroll in their own hosts. */
+#CNT{width:100%;min-width:0}
+#CNT .pg{min-width:0;max-width:100%;overflow-wrap:anywhere}
+#CNT .pg :is([class*="grid"],.fg,.rg){min-width:0;max-width:100%}
+#CNT .pg :is([class*="grid"],.fg,.rg)>:not(table){min-width:0}
+#CNT .pg :is(.tw,.dtbl-wrap,.abx-dtbl-wrap,.dose-table-wrap,.abe-table-wrap,.aal-table-wrap,.table-wrap){min-width:0;max-width:100%}
+
+/* The calculated CrCl severity can be longer than a phone's content column. */
+#pg-abxdose .abx-crcl-result.show{min-width:0;max-width:100%}
+#pg-abxdose .abx-crcl-result>*{min-width:0;max-width:100%}
+#pg-abxdose .abx-crcl-zone{white-space:normal;overflow-wrap:anywhere;line-height:1.45}
+#pg-abxdose .abx-crcl-note{min-width:0;overflow-wrap:anywhere}
+#pg-abxdose .abx-unit-wrap{min-width:0;max-width:100%}
+
+@media(max-width:768px){
+  #pg-abxdose .abx-fg{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #pg-abxdose .abx-crcl-result>*{align-self:flex-start}
+  #pg-abxdose .abx-crcl-note{align-self:stretch}
+}
+@media(max-width:480px){
+  #pg-abxdose .abx-fg{grid-template-columns:minmax(0,1fr)}
+  #CNT .pg .rg{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+</style>
 </head>
 <body class="authed">
 <div id="OVL"></div>
@@ -4658,7 +4683,7 @@ body:not(.mpt-auth-ok) #SB,body:not(.mpt-auth-ok) #MAIN,body:not(.mpt-auth-ok) #
     <div class="abx-crcl-zone" id="abx-crcl-zone"></div>
     <div class="abx-crcl-note" id="abx-crcl-note"></div>
   </div>
-  <div id="abx-extra-metrics" style="display:none;margin-top:12px;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px">
+  <div id="abx-extra-metrics" style="display:none;margin-top:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,120px),1fr));gap:10px">
     <div style="background:var(--BG);border:1px solid var(--BOR);border-radius:9px;padding:10px 12px;text-align:center">
       <div style="font-size:17px;font-weight:800;color:var(--PD)" id="abx-egfr-val">—</div>
       <div style="font-size:12.5px;color:var(--T2);margin-top:2px">eGFR (CKD-EPI) mL/phút/1.73m²</div>
@@ -8005,6 +8030,127 @@ var host=document.getElementById('CNT');if(host){new MutationObserver(function(m
   }
   window.MPTReferenceCompact={refreshIVPO:refreshIVPO,refreshABX:refreshABX,refreshNelson:refreshNelson};
   ['nlsCalcPatient','nlsShowDrugResult','nlsShowGroupResult','nlsUpdateAminoHighlight','nlsUpdateVancoHighlight'].forEach(wrapNelson);
+})();
+</script>
+<style id="MPT-R11-2-66-ALL-TABLE-HEADS-STYLE">
+#mpt-long-table-head{position:fixed;z-index:99;overflow:hidden;pointer-events:none;box-sizing:border-box;border-radius:0 0 7px 7px;box-shadow:0 5px 12px rgba(20,38,30,.15);contain:paint}
+#mpt-long-table-head[hidden]{display:none!important}
+#mpt-long-table-head .mpt-long-head-cell{position:absolute;box-sizing:border-box;display:flex;align-items:center;overflow:hidden;white-space:normal;overflow-wrap:anywhere}
+#mpt-long-table-head .mpt-long-head-caption{box-sizing:border-box;height:36px;padding:7px 11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:var(--CARD,#fff);border:1px solid var(--BOR,#cfe3d7);color:var(--PD,#0b5f42);font-family:inherit;font-size:14px;font-weight:700;line-height:20px}
+@media print{#mpt-long-table-head{display:none!important}#CNT table thead{display:table-header-group}}
+</style>
+<script id="MPT-R11-2-66-ALL-TABLE-HEADS-JS">
+(function(){
+  'use strict';
+  var guide=null,table=null,head=null,caption='',cells=[],frame=0,restyle=false;
+  function ensureGuide(){
+    if(guide)return guide;
+    guide=document.createElement('div');guide.id='mpt-long-table-head';guide.hidden=true;
+    guide.setAttribute('aria-hidden','true');document.body.appendChild(guide);
+    return guide;
+  }
+  function hide(){if(guide)guide.hidden=true}
+  function headerOf(t){
+    if(t.tHead&&t.tHead.rows.length&&t.tHead.querySelector('th'))return t.tHead;
+    var b=t.tBodies&&t.tBodies[0],r=b&&b.rows[0];
+    if(r&&b.rows.length>1&&r.cells.length>1&&[].every.call(r.cells,function(c){return c.tagName==='TH'}))return r;
+    return null;
+  }
+  function titleOf(t){
+    var context=t.closest('.abx-dsec,.dc,.card,.result-box,.vcl-card,.vgn-card,.vbm-card');
+    var title=t.caption||(context&&context.querySelector('.abx-dsec-h,.dch-trade,.card-t,.result-header,h3,h4'));
+    if(!title){var page=t.closest('.pg');title=page&&page.querySelector(':scope > .st, :scope > h1, :scope > h2')}
+    if(!title)title=document.getElementById('TB-title');
+    return title?String(title.textContent||'').replace(/\s+/g,' ').trim():'';
+  }
+  function background(el){
+    while(el&&el!==document.body){
+      var c=getComputedStyle(el).backgroundColor;
+      if(c&&c!=='transparent'&&c!=='rgba(0, 0, 0, 0)')return c;
+      el=el.parentElement;
+    }
+    return '#fff';
+  }
+  function styleCell(from,to){
+    var s=getComputedStyle(from),align=s.textAlign;
+    to.style.backgroundColor=background(from);
+    to.style.backgroundImage=s.backgroundImage;
+    to.style.color=s.color;
+    to.style.fontFamily=s.fontFamily;
+    to.style.fontSize=s.fontSize;
+    to.style.fontWeight=s.fontWeight;
+    to.style.fontStyle=s.fontStyle;
+    to.style.lineHeight=s.lineHeight;
+    to.style.letterSpacing=s.letterSpacing;
+    to.style.padding=s.padding;
+    to.style.borderBottom=s.borderBottom;
+    to.style.borderRight=s.borderRight;
+    to.style.textAlign=align;
+    to.style.justifyContent=align==='center'?'center':align==='right'?'flex-end':'flex-start';
+    to.style.zIndex=s.position==='sticky'?'2':'1';
+  }
+  function findActive(){
+    var page=document.querySelector('#CNT .pg.active');
+    if(!page||document.body.classList.contains('mpt-catalog-mode')||document.body.classList.contains('mpt-ios-select-open')||document.body.classList.contains('mpt-control-menu-open'))return null;
+    var bar=document.getElementById('TB'),barRect=bar&&bar.getBoundingClientRect();
+    var anchor=Math.max(0,barRect&&barRect.height?barRect.bottom:0)+2;
+    // A table of 10–15 rows still needs its headings on a tall desktop display.
+    // Keep a modest lower bound for short reference tables on phones.
+    var minHeight=Math.min(420,Math.max(330,window.innerHeight*.55));
+    var tables=page.querySelectorAll('table');
+    for(var i=0;i<tables.length;i++){
+      var t=tables[i];if(!t.getClientRects().length)continue;
+      var tr=t.getBoundingClientRect();
+      if(tr.height<minHeight||tr.bottom<=anchor||tr.top>=window.innerHeight)continue;
+      var h=headerOf(t),label=h?'':titleOf(t);
+      if(!h&&!label)continue;
+      var host=t.closest('.mpt-table-host')||t.parentElement;
+      if(!host)continue;
+      var hr=host.getBoundingClientRect(),hh=h?h.getBoundingClientRect():{height:36,top:tr.top,bottom:tr.top};
+      if(h&&hh.height<20)continue;
+      var clipped=hr.height<tr.height-4,top=clipped?Math.max(anchor,hr.top):anchor;
+      var bottom=clipped?Math.min(tr.bottom,hr.bottom):tr.bottom;
+      if(hh.bottom>=top+1||bottom<=top+Math.min(32,hh.height))continue;
+      var left=Math.max(0,hr.left,tr.left),right=Math.min(window.innerWidth,hr.right,tr.right);
+      if(right-left<100)continue;
+      return{table:t,head:h,label:label,headRect:hh,left:left,width:right-left,top:top,bottom:bottom};
+    }
+    return null;
+  }
+  function render(){
+    var active=findActive();if(!active){hide();return}
+    var h=active.head,source=h?[].slice.call(h.querySelectorAll('th,td')):[];
+    var rebuild=table!==active.table||head!==h||caption!==active.label||restyle||cells.length!==source.length||
+      cells.some(function(c,i){return c.from!==source[i]||c.label!==String(source[i].textContent||'').replace(/\s+/g,' ').trim()});
+    var root=ensureGuide();
+    if(rebuild){
+      root.replaceChildren();
+      if(h){cells=source.map(function(from){
+          var el=document.createElement('div'),label=String(from.textContent||'').replace(/\s+/g,' ').trim();
+          el.className='mpt-long-head-cell';el.textContent=label;styleCell(from,el);root.appendChild(el);
+          return{from:from,el:el,label:label};
+        })}
+      else{cells=[];var title=document.createElement('div');title.className='mpt-long-head-caption';title.textContent=active.label;root.appendChild(title)}
+      table=active.table;head=h;caption=active.label;restyle=false;
+    }
+    root.style.left=active.left+'px';root.style.top=Math.min(active.top,active.bottom-active.headRect.height)+'px';
+    root.style.width=active.width+'px';root.style.height=active.headRect.height+'px';
+    cells.forEach(function(c){
+      var r=c.from.getBoundingClientRect(),s=c.el.style;
+      s.left=(r.left-active.left)+'px';s.top=(r.top-active.headRect.top)+'px';
+      s.width=r.width+'px';s.height=r.height+'px';
+    });
+    root.hidden=false;
+  }
+  function schedule(){if(frame)return;frame=requestAnimationFrame(function(){frame=0;render()})}
+  window.addEventListener('scroll',schedule,true);
+  window.addEventListener('resize',function(){restyle=true;schedule()},{passive:true});
+  window.addEventListener('orientationchange',function(){restyle=true;setTimeout(schedule,120)});
+  window.addEventListener('pageshow',schedule);
+  window.addEventListener('mpt:tool-opened',function(){hide();setTimeout(schedule,0)});
+  document.addEventListener('click',function(){setTimeout(schedule,80)},true);
+  document.addEventListener('change',function(){setTimeout(schedule,80)},true);
+  window.MPTLongTableHeader={refresh:schedule,hide:hide};
 })();
 </script>
 <style id="MPT-R11-2-63-RESULT-SCROLL-STYLE">
