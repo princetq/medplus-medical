@@ -1024,6 +1024,39 @@ body:not(.mpt-auth-ok) #SB,body:not(.mpt-auth-ok) #MAIN,body:not(.mpt-auth-ok) #
 }
 
 </style>
+<style id="MPT-R11-2-70-VANCO-PROTOCOL">
+/* R11.2.70: preserve the existing Vancomycin design and semantic colors. */
+#mpt-long-table-head{background:#fff}
+#pg-vanco label.mpt-vanco-loading-choice{display:flex;align-items:center;gap:12px;min-height:48px;width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid var(--vbd);border-radius:8px;font-size:16.5px;font-weight:500;line-height:1.5;cursor:pointer;touch-action:manipulation;background:#fff}
+#pg-vanco label.mpt-vanco-loading-choice input[type=checkbox]{appearance:auto!important;-webkit-appearance:checkbox!important;width:26px!important;height:26px!important;min-width:26px!important;max-width:26px!important;min-height:26px!important;max-height:26px!important;flex:0 0 26px!important;margin:0!important;padding:0!important;accent-color:var(--va);cursor:pointer}
+#pg-vanco label.mpt-vanco-loading-choice span{flex:1;min-width:0;overflow-wrap:break-word}
+#pg-vanco label.mpt-vanco-loading-choice:has(input:checked){border-color:var(--va);background:var(--val)}
+#pg-vanco label.mpt-vanco-loading-choice:focus-within{outline:2px solid var(--va);outline-offset:2px}
+#vk-protocol [hidden]{display:none!important}
+#vk-protocol .vqt-intro{margin:0 0 14px;line-height:1.65;color:var(--vtm);overflow-wrap:break-word}
+#vk-protocol .ref-box .vqt-intro{margin:0}
+#vk-protocol .vgn-toggle-mode button{min-width:0;overflow-wrap:break-word}
+#vk-protocol .vqt-unit-toggle{display:flex;flex:0 0 145px;width:145px;min-height:44px;border:1px solid var(--vbd);border-radius:7px;overflow:hidden}
+#vk-protocol .vqt-unit-toggle button{flex:1;min-width:0;border:0;background:#fff;padding:8px 7px;font-size:15px;font-weight:600;cursor:pointer;color:var(--vtm);font-family:inherit}
+#vk-protocol .vqt-unit-toggle button.active{background:var(--va);color:#fff}
+#vk-protocol .vgn-field input[aria-invalid=true],#vk-protocol .vgn-field select[aria-invalid=true]{border-color:var(--R-TXT)}
+#vk-protocol .vqt-table-wrap{width:100%;max-width:100%;min-width:0;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:12px 0 20px}
+#vk-protocol .vgn-table caption{text-align:left;font-weight:700;color:var(--vad);padding:8px 0;font-size:16px}
+#vk-protocol .vgn-table th{word-break:normal!important;overflow-wrap:normal!important}
+#vk-protocol .vqt-table-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:8px 0;color:var(--vtm);font-size:15px}
+#vk-protocol .vqt-table-tools button{min-height:44px;max-width:100%;white-space:normal;padding:8px 12px}
+#vk-protocol .vqt-table-compact tbody tr:not(.vqt-row-match){display:none}
+#vk-protocol .vgn-table tr.vqt-row-match td{background:var(--val);font-weight:650}
+#vk-protocol .vgn-table tr.vqt-row-match td:first-child{box-shadow:inset 4px 0 var(--va)}
+#vk-protocol .vgn-table td.vqt-cell-match{background:rgba(22,135,91,.19)!important;box-shadow:inset 0 0 0 2px var(--va);color:var(--vad)}
+#vk-protocol .vqt-match-label{display:block;font-size:13px;color:var(--vad);font-weight:700}
+#vk-protocol .vqt-source-notes{line-height:1.65;color:var(--vtm);font-size:15px}
+#vk-protocol .vqt-source-notes summary{min-height:44px;cursor:pointer;color:var(--vad);font-weight:650;padding:9px 0}
+#vk-protocol .vgn-dose-value,#vk-protocol .vgn-hero-value,#vk-protocol .vgn-hero-sub{overflow-wrap:break-word}
+@media(max-width:480px){#vk-protocol .vgn-card{padding:16px 14px}#vk-protocol .vqt-unit-toggle{flex-basis:140px;width:140px}#pg-vanco label.mpt-vanco-loading-choice{padding:10px;gap:10px}}
+@media print{#vk-protocol .vqt-table-tools{display:none}#vk-protocol .vqt-table-compact tbody tr{display:table-row}}
+
+</style>
 </head>
 <body class="authed">
 <div id="OVL"></div>
@@ -1579,9 +1612,10 @@ body:not(.mpt-auth-ok) #SB,body:not(.mpt-auth-ok) #MAIN,body:not(.mpt-auth-ok) #
 <!-- ====================== VANCOMYCIN ====================== -->
 <div id="pg-vanco" class="pg" data-mpt-tools="vanco">
 <div class="st">💉 Vancomycin — PK/TDM Calculator</div>
-<div class="ss">Liều khởi đầu GAPP Nomogram · TDM Bayesian AUC-guided · ASHP/IDSA/PIDS/SIDP 2020</div>
+<div class="ss">Liều khởi đầu GAPP / Quy trình BV · TDM Bayesian AUC-guided · ASHP/IDSA/PIDS/SIDP 2020</div>
 <div class="tab-row">
   <button class="tab-btn active" data-tab="vanco" data-target="vk-init">⚡ Liều khởi đầu (GAPP)</button>
+  <button type="button" class="tab-btn" data-tab="vanco" data-target="vk-protocol" aria-pressed="false">📋 Liều khởi đầu (Quy trình BV)</button>
   <button class="tab-btn" data-tab="vanco" data-target="vk-tdm">📈 TDM AUC / Bayesian</button>
 </div>
 <!-- Initial: GAPP Nomogram -->
@@ -1642,10 +1676,10 @@ body:not(.mpt-auth-ok) #SB,body:not(.mpt-auth-ok) #MAIN,body:not(.mpt-auth-ok) #
         <div class="vgn-radio-sub">Bệnh nhân chăm sóc đặc biệt / huyết học-ung thư / viêm nội tâm mạc / viêm xương / nhiễm khuẩn huyết / viêm màng não / viêm phổi MRSA — đích 15–20 mg/L</div>
       </label>
     </div>
-    <div class="vgn-checkbox-row" id="vgn-loading-row" style="margin-top:14px;">
+    <label class="vgn-checkbox-row mpt-vanco-loading-choice" id="vgn-loading-row" for="vgn-want-loading" style="margin-top:14px;">
       <input type="checkbox" id="vgn-want-loading">
-      <label for="vgn-want-loading">Dùng liều nạp (loading dose) — khuyến cáo cho nhóm nguy cơ cao</label>
-    </div>
+      <span>Dùng liều nạp (loading dose) — khuyến cáo cho nhóm nguy cơ cao</span>
+    </label>
   </div>
 
   <div class="br"><button type="button" class="bp" onclick="VGN.calculate()">⚡ Tính liều khởi đầu</button><button type="button" class="bs" onclick="VGN.reset()">🗑️ Xoá</button></div>
@@ -1695,6 +1729,76 @@ body:not(.mpt-auth-ok) #SB,body:not(.mpt-auth-ok) #MAIN,body:not(.mpt-auth-ok) #
 </div></div>
 </div>
 <!-- TDM: Bayesian AUC -->
+<!-- R11.2.71: initial doses and the confirmed table-lookup rounding rules. -->
+<div id="vk-protocol" class="tab-c">
+<div class="vgn-root"><div class="vgn-container" style="max-width:100%;margin:0;padding:16px 0 32px">
+  <div class="vgn-card">
+    <h2><span class="vgn-step-num">1</span>Thông tin người bệnh</h2>
+    <p class="vqt-intro"><strong>Quy trình BVĐK tỉnh Tuyên Quang · QT.DUOC.04</strong><br>Liều khởi đầu theo các bảng trong tài liệu được cung cấp. Áp dụng cho người lớn <strong>&gt;18 tuổi</strong>; loại trừ người mang thai và người đang lọc máu.</p>
+    <div class="vgn-field-row vgn-cols-3">
+      <div class="vgn-field"><label for="vqt-age">Tuổi (năm)</label><input type="text" inputmode="decimal" id="vqt-age" value="60"></div>
+      <div class="vgn-field"><label for="vqt-sex">Giới tính</label><select id="vqt-sex"><option value="male">Nam</option><option value="female">Nữ</option></select></div>
+      <div class="vgn-field"><label for="vqt-height">Chiều cao (cm)</label><input type="text" inputmode="decimal" id="vqt-height" value="165"></div>
+    </div>
+    <div class="vgn-field-row">
+      <div class="vgn-field"><label for="vqt-weight">Cân nặng thực tế (kg)</label><input type="text" inputmode="decimal" id="vqt-weight" value="65"></div>
+      <div class="vgn-field"><label for="vqt-scr">Creatinin huyết thanh</label>
+        <div class="mpt-unit-control" style="display:flex;gap:6px">
+          <input type="text" inputmode="decimal" id="vqt-scr" value="0.9" style="flex:1" aria-describedby="vqt-scr-unit">
+          <div class="vqt-unit-toggle" id="vqt-scr-unit" aria-label="Đơn vị creatinin">
+            <button type="button" class="active" data-unit="mgdl" aria-pressed="true" onclick="VQT.toggleScrUnit('mgdl')">mg/dL</button>
+            <button type="button" data-unit="umol" aria-pressed="false" onclick="VQT.toggleScrUnit('umol')">µmol/L</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="vgn-field-row">
+      <div class="vgn-field"><label for="vqt-context">Điều kiện áp dụng</label><select id="vqt-context"><option value="eligible">Không mang thai, không lọc máu</option><option value="pregnant">Đang mang thai — ngoài phạm vi</option><option value="dialysis">Đang lọc máu — ngoài phạm vi</option></select></div>
+      <div class="vgn-field"><label for="vqt-renal-stability">Diễn biến chức năng thận</label><select id="vqt-renal-stability"><option value="stable">Ổn định</option><option value="unstable">Không ổn định / creatinin thay đổi</option></select></div>
+    </div>
+  </div>
+  <div class="vgn-card">
+    <h2><span class="vgn-step-num">2</span>Chọn cách truyền &amp; liều nạp</h2>
+    <div class="vgn-toggle-mode" aria-label="Cách truyền Vancomycin">
+      <button type="button" class="active" id="vqt-mode-intermittent" aria-pressed="true" onclick="VQT.setMode('intermittent')">Truyền ngắt quãng</button>
+      <button type="button" id="vqt-mode-continuous" aria-pressed="false" onclick="VQT.setMode('continuous')">Truyền liên tục</button>
+    </div>
+    <div class="vgn-method-note" id="vqt-target"></div>
+    <label class="vgn-checkbox-row mpt-vanco-loading-choice" for="vqt-want-loading">
+      <input type="checkbox" id="vqt-want-loading" checked><span>Dùng liều nạp (loading dose)</span>
+    </label>
+    <div id="vqt-loading-choice-wrap" hidden>
+      <div class="vgn-field"><label for="vqt-loading-choice">Chọn liều nạp trong khoảng tham khảo</label><select id="vqt-loading-choice" aria-describedby="vqt-loading-help"><option value="">Chọn liều theo đánh giá lâm sàng</option></select></div>
+      <div class="vgn-method-note" id="vqt-loading-help"></div>
+    </div>
+    <div id="vqt-loading-preview" class="vgn-bw-info"></div>
+  </div>
+  <div id="vqt-input-error" class="vgn-alert-block" role="alert" hidden></div>
+  <div class="br"><button type="button" class="bp" onclick="VQT.calculate()">⚡ Tính liều khởi đầu</button><button type="button" class="bs" onclick="VQT.reset()">🗑️ Xoá</button></div>
+  <div id="vqt-results" class="vgn-results" style="margin-top:20px" aria-live="polite">
+    <div class="vgn-result-hero" id="vqt-hero"></div>
+    <div id="vqt-rounding-summary" class="vgn-method-note" style="margin:0 0 18px"></div>
+    <div id="vqt-alerts"></div>
+    <div class="vgn-card"><h2>Phác đồ tham khảo theo quy trình</h2><div id="vqt-regimen-content"></div></div>
+    <div class="vgn-card"><h2>Theo dõi nồng độ thuốc</h2><div id="vqt-monitoring-content"></div></div>
+    <div class="vgn-card"><h2>Thông số tính toán</h2><div id="vqt-calc-detail"></div><div class="vgn-method-note" id="vqt-method-note"></div></div>
+  </div>
+  <div class="vgn-card" id="vqt-reference-card">
+    <h2>Bảng liều trong quy trình</h2>
+    <p class="vqt-intro">Cân nặng và CrCl được làm tròn xuống số nguyên khi tra bảng. Sau khi tính, dòng phù hợp được tô sáng. Có thể mở toàn bảng để đối chiếu; dòng phù hợp vẫn giữ màu.</p>
+    <div id="vqt-reference-tables"></div>
+    <details class="vqt-source-notes"><summary>Ghi chú khi đối chiếu tài liệu</summary>
+      <p>Truyền ngắt quãng: liều nạp đang dùng cách tính GAPP với 25 mg/kg cân nặng gốc, giới hạn 3000 mg của quy trình và làm tròn đến 250 mg gần nhất. Bảng 1 giữ để đối chiếu; không dùng để chọn liều nạp đang hiển thị. Phụ lục 1 mô tả 25–35 mg/kg, tiêu đề Bảng 1 ghi 25–30 mg/kg. Riêng BMI &gt;30 kg/m²: tham khảo DSLS, quy trình ghi 20–25 mg/kg.</p>
+      <p>Cách tra đang áp dụng: làm tròn xuống cân nặng đến kg nguyên và CrCl đến mL/phút nguyên, ví dụ 40,9 kg → 40 kg; CrCl 59,6 → 59. Công thức CrCl, BMI và liều theo mg/kg vẫn dùng số đo gốc. Tại Bảng 6, dùng trị số của dòng &gt;100 cho cả CrCl đúng 100, hiển thị thành ≥100. Đây là quy tắc tra bảng bổ sung cho tài liệu được cung cấp.</p>
+      <p>Liều nạp tính theo mg/kg được làm tròn đến 250 mg gần nhất và không vượt 3000 mg theo quy trình. Với truyền liên tục, liều nạp tra Bảng 5; khi bảng đưa ra khoảng liều, người dùng chọn mức nằm trong khoảng đó. Cân nặng &lt;36 kg chưa có mức tương ứng trong Bảng 5–6, vẫn cần xác nhận DSLS.</p>
+      <p>Bảng 3 có các khoảng thời gian truyền ngắn hơn giới hạn 10 mg/phút. Phác đồ hiển thị thời gian tối thiểu theo giới hạn này; bảng tham khảo vẫn giữ nguyên để đối chiếu. Phụ lục 3 cũng nêu liều 1 g truyền ít nhất 100 phút.</p>
+    </details>
+  </div>
+  <div class="ref-box" style="margin-top:0"><div class="ref-hdr">📚 Tài liệu áp dụng</div><p class="vqt-intro">BVĐK tỉnh Tuyên Quang. <em>Giám sát nồng độ thuốc trong máu và hiệu chỉnh liều Vancomycin trên bệnh nhân người lớn</em> (QT.DUOC.04), bản tài liệu được cung cấp: phụ lục 1, Bảng 1–3 và công thức CrCl; phụ lục 2, Bảng 5–6 và hướng dẫn theo dõi; phụ lục 3, tốc độ truyền. Ngày hiệu lực trong tài liệu chưa được điền.</p></div>
+  <div class="hl-note ib-w" style="margin-top:12px"><strong>Liều khởi đầu tham khảo</strong> — bác sĩ/DSLS xác nhận chế độ liều và hiệu chỉnh theo nồng độ đo được. Tính liều khởi đầu không xác nhận bệnh nhân đã đạt AUC hoặc Css mục tiêu.</div>
+</div></div>
+</div>
+
 <div id="vk-tdm" class="tab-c">
 <div class="vbm-root"><div class="vbm-container" style="max-width:1100px;margin:0 auto;padding:16px 0 32px">
 <div class="vbm-grid">
@@ -8339,6 +8443,271 @@ var host=document.getElementById('CNT');if(host){
     },280);
   });
 })();
+</script>
+<script id="MPT-R11-2-71-VANCO-PROTOCOL-RUNTIME">
+(function () {
+  'use strict';
+  // R11.2.71: floor weight/CrCl for table lookup; preserve raw values for formulas.
+  const loadingI = [
+    { label: '35–40', min: 35, max: 40, low: 1000, high: 1000 },
+    { label: '41–50', min: 41, max: 50, low: 1250, high: 1250 },
+    { label: '51–60', min: 51, max: 60, low: 1500, high: 1500 },
+    { label: '61–70', min: 61, max: 70, low: 1750, high: 1750 },
+    { label: '>70', min: 70, openMin: true, max: Infinity, low: 2000, high: 2000 }
+  ];
+  const maintenanceI = [
+    { label: '>130*', min: 130, openMin: true, max: Infinity, doseMg: 1250, intervalH: 8 },
+    { label: '>90', min: 90, openMin: true, max: 130, doseMg: 1500, intervalH: 12 },
+    { label: '60–90', min: 60, max: 90, doseMg: 1000, intervalH: 12 },
+    { label: '20–59', min: 20, max: 59, doseMg: 1000, intervalH: 24 },
+    { label: '<20', min: 0, max: 20, openMax: true, doseMg: 1000, intervalH: 48 }
+  ];
+  const loadingC = [
+    { label: '36–43', min: 36, max: 43, low: 750, high: 750 },
+    { label: '44–55', min: 44, max: 55, low: 750, high: 1000 },
+    { label: '56–68', min: 56, max: 68, low: 1000, high: 1250 },
+    { label: '69–80', min: 69, max: 80, low: 1250, high: 1500 },
+    { label: '81–93', min: 81, max: 93, low: 1500, high: 1750 },
+    { label: '94–106', min: 94, max: 106, low: 1500, high: 2000 },
+    { label: '107–119', min: 107, max: 119, low: 1750, high: 2250 },
+    { label: '120–130', min: 120, max: 130, low: 2000, high: 2500 },
+    { label: '131–143', min: 131, max: 143, low: 2000, high: 2750 },
+    { label: '≥144', min: 144, max: Infinity, low: 2250, high: 3000 }
+  ];
+  const weightC = [{ label: '36–55 kg', min: 36, max: 55 }, { label: '56–119 kg', min: 56, max: 119 }, { label: '≥120 kg', min: 120, max: Infinity }];
+  const maintenanceC = [
+    { label: '<10', min: 0, max: 10, openMax: true, rates: [3, 3, 4] },
+    { label: '10–15', min: 10, max: 15, rates: [4, 5, 6] },
+    { label: '16–20', min: 16, max: 20, rates: [5, 6, 7] },
+    { label: '21–30', min: 21, max: 30, rates: [8, 8, 9] },
+    { label: '31–40', min: 31, max: 40, rates: [10, 10, 11] },
+    { label: '41–50', min: 41, max: 50, rates: [12, 12, 13] },
+    { label: '51–62', min: 51, max: 62, rates: [15, 15, 15] },
+    { label: '63–83', min: 63, max: 83, rates: [20, 20, 20] },
+    { label: '84–99', min: 84, max: 99, rates: [23, 23, 23] },
+    { label: '≥100', min: 100, max: Infinity, rates: [30, 30, 30] }
+  ];
+  const infusionRows = [
+    { label: '≤1000 mg', min: 0, max: 1000, volume: '250 mL', volumeLow: 250, volumeHigh: 250, time: '60–90 phút', timeMin: 60, drops: '50–80 giọt/phút' },
+    { label: '1250 mg', min: 1250, max: 1250, volume: '250 mL', volumeLow: 250, volumeHigh: 250, time: '90–120 phút', timeMin: 90, drops: '40–60 giọt/phút' },
+    { label: '1500 mg', min: 1500, max: 1500, volume: '500 mL', volumeLow: 500, volumeHigh: 500, time: '120–150 phút', timeMin: 120, drops: '60–80 giọt/phút' },
+    { label: '1750 mg', min: 1750, max: 1750, volume: '500 mL', volumeLow: 500, volumeHigh: 500, time: '120–180 phút', timeMin: 120, drops: '60–80 giọt/phút' },
+    { label: '2000 mg', min: 2000, max: 2000, volume: '500 mL', volumeLow: 500, volumeHigh: 500, time: '150–180 phút', timeMin: 150, drops: '60–70 giọt/phút' },
+    { label: '>2000 mg', min: 2000, openMin: true, max: Infinity, volume: '500–750 mL', volumeLow: 500, volumeHigh: 750, time: '60–100 phút cho mỗi 1 g', timeMin: 0, drops: 'Không ghi' }
+  ];
+  const el = id => document.getElementById(id);
+  const number = value => /^\d+(?:[.,]\d+)?$/.test(String(value).trim()) ? Number(String(value).trim().replace(',', '.')) : NaN;
+  const inBand = (n, row) => Number.isFinite(n) && (row.openMin ? n > row.min : n >= row.min) && (row.openMax ? n < row.max : n <= row.max);
+  const lookup = (rows, n) => rows.findIndex(row => inBand(n, row));
+  const downForTable = n => Number.isFinite(n) && n >= 0 ? Math.floor(n) : NaN;
+  const round250 = n => Math.min(3000, Math.round(n / 250) * 250);
+  const f = (n, places = 1) => Number.isFinite(n) ? n.toLocaleString('vi-VN', { minimumFractionDigits: places, maximumFractionDigits: places }) : '—';
+  const precise = n => Number.isFinite(n) ? n.toLocaleString('vi-VN', { maximumFractionDigits: 6 }) : '—';
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+  const range = (low, high) => low === high ? f(low, 0) : f(low, 0) + '–' + f(high, 0);
+  function renal(p) {
+    const ibw = (p.sex === 'female' ? 45.5 : 50) + 0.9055 * (p.heightCm - 152);
+    const adjBW = 0.6 * ibw + 0.4 * p.weightKg;
+    const weightIndex = p.weightKg < ibw ? 0 : p.weightKg <= 1.2 * ibw ? 1 : 2;
+    const crclWeight = [p.weightKg, ibw, adjBW][weightIndex];
+    // Remove binary arithmetic noise; the raw estimate is retained alongside lookup values.
+    const crcl = Number(((140 - p.ageYears) * crclWeight * (p.sex === 'female' ? 0.85 : 1) / (p.scrUmolL * 0.815)).toPrecision(13));
+    return { ibw, adjBW, crclWeight, weightIndex, weightLabel: ['ABW (cân nặng thực)', 'IBW (cân nặng lý tưởng)', 'AdjBW (cân nặng hiệu chỉnh)'][weightIndex], crcl, bmi: p.weightKg / ((p.heightCm / 100) ** 2) };
+  }
+  function loading(mode, p, r) {
+    const rows = mode === 'continuous' ? loadingC : loadingI;
+    const weightForTable = downForTable(p.weightKg), index = lookup(rows, weightForTable);
+    if (mode === 'intermittent') {
+      const doseBeforeRound = 25 * p.weightKg, doseCapped = Math.min(3000, doseBeforeRound), dose = Math.round(doseCapped / 250) * 250;
+      return { low: dose, high: dose, options: dose > 0 && Number.isFinite(dose) ? [dose] : [], index: -1, weightForTable, formula: true, doseBeforeRound, doseCapped, table: '25 mg/kg · cách tính GAPP', consult: r.bmi > 30, reason: '25 mg/kg × ' + precise(p.weightKg) + ' kg = ' + precise(doseBeforeRound) + ' mg; giới hạn 3000 mg, làm tròn đến 250 mg gần nhất theo cách xử lý của tab GAPP.' + (r.bmi > 30 ? ' BMI >30: tham khảo DSLS theo ghi chú của quy trình (20–25 mg/kg).' : '') };
+    }
+    if (index < 0) return { options: [], index: -1, weightForTable, table: mode === 'continuous' ? 'Bảng 5' : 'Bảng 1', reason: 'Cân nặng ' + precise(p.weightKg) + ' kg → tra bảng ' + precise(weightForTable) + ' kg, chưa có khoảng liều nạp tương ứng. Cần xác nhận DSLS.' };
+    const row = rows[index], options = [];
+    for (let dose = row.low; dose <= row.high; dose += 250) options.push(dose);
+    return { low: row.low, high: row.high, options, index, weightForTable, table: mode === 'continuous' ? 'Bảng 5' : 'Bảng 1', reason: (mode === 'continuous' ? 'Bảng 5' : 'Bảng 1') + ': tra cân nặng ' + precise(weightForTable) + ' kg, thuộc dòng ' + row.label + ' kg.' };
+  }
+  function maintenance(mode, crcl, weightKg) {
+    const crclForTable = downForTable(crcl), weightForTable = downForTable(weightKg);
+    if (!(crcl > 0 && Number.isFinite(crcl))) return { index: -1, weightIndex: -1, crclForTable, weightForTable, reason: 'CrCl không hợp lệ; cần kiểm tra thông số trước khi tra liều duy trì.' };
+    if (mode === 'intermittent') {
+      const index = lookup(maintenanceI, crclForTable);
+      return index < 0 ? { index: -1, crclForTable, weightForTable, reason: 'CrCl sau làm tròn xuống chưa có mức tương ứng trong Bảng 2. Cần xác nhận DSLS.' } : { ...maintenanceI[index], index, crclForTable, weightForTable, table: 'Bảng 2', dailyMg: maintenanceI[index].doseMg * 24 / maintenanceI[index].intervalH };
+    }
+    const index = lookup(maintenanceC, crclForTable), weightIndex = lookup(weightC, weightForTable);
+    if (index < 0 || weightIndex < 0) return { index: -1, weightIndex: -1, crclForTable, weightForTable, reason: (index < 0 ? 'CrCl tra bảng ' + precise(crclForTable) + ' mL/phút' : 'Cân nặng ' + precise(weightKg) + ' kg → tra bảng ' + precise(weightForTable) + ' kg') + ' chưa có khoảng tương ứng trong Bảng 6. Cần xác nhận DSLS; chưa xác định tốc độ duy trì.' };
+    const rateMlH = maintenanceC[index].rates[weightIndex];
+    return { index, weightIndex, crclForTable, weightForTable, rateMlH, hourlyMg: rateMlH * 4, dailyMg: rateMlH * 4 * 24, volumeDayMl: rateMlH * 24, table: 'Bảng 6' };
+  }
+  function infusion(doseMg, mode) {
+    if (mode === 'continuous') return { minMinutes: Math.ceil(Math.max(60, doseMg / 10)), volumeLow: doseMg / 4, volumeHigh: doseMg / 4, index: -1 };
+    const index = lookup(infusionRows, doseMg), row = infusionRows[index];
+    if (!row) return null;
+    return { minMinutes: Math.ceil(Math.max(60, doseMg / 10, row.timeMin)), volumeLow: Math.max(row.volumeLow, doseMg / 5), volumeHigh: row.volumeHigh, index };
+  }
+  const api = {
+    mode: 'intermittent', scrUnit: 'mgdl', convertedScr: null, expanded: Object.create(null), last: null,
+    tables: { loadingI, maintenanceI, loadingC, maintenanceC, weightC, infusionRows },
+    model: { renal, loading, maintenance, infusion, lookup, number, round250, downForTable },
+    getPatient() {
+      const p = { ageYears: number(el('vqt-age').value), sex: el('vqt-sex').value, heightCm: number(el('vqt-height').value), weightKg: number(el('vqt-weight').value) };
+      const scr = number(el('vqt-scr').value), cached = this.convertedScr;
+      p.scrUmolL = cached && cached.value === el('vqt-scr').value && cached.unit === this.scrUnit ? cached.umol : this.scrUnit === 'mgdl' ? scr * 88.4 : scr;
+      if (el('vqt-context').value !== 'eligible') return { error: 'Quy trình không áp dụng cho người mang thai hoặc đang sử dụng bất kỳ phương pháp lọc máu nào.', field: 'vqt-context' };
+      if (!(p.ageYears > 18 && p.ageYears < 140)) return { error: 'Nhập tuổi >18 và <140 để sử dụng công thức trong quy trình.', field: 'vqt-age' };
+      if (!(p.heightCm > 0 && Number.isFinite(p.heightCm))) return { error: 'Nhập chiều cao hợp lệ, lớn hơn 0.', field: 'vqt-height' };
+      if (!(p.weightKg > 0 && Number.isFinite(p.weightKg))) return { error: 'Nhập cân nặng hợp lệ, lớn hơn 0.', field: 'vqt-weight' };
+      if (!(scr > 0 && Number.isFinite(p.scrUmolL))) return { error: 'Nhập creatinin hợp lệ, lớn hơn 0; kiểm tra đúng đơn vị đang chọn.', field: 'vqt-scr' };
+      const r = renal(p);
+      if (!(r.ibw > 0 && r.crcl > 0 && Number.isFinite(r.crcl))) return { error: 'Các thông số nhập tạo IBW hoặc CrCl không hợp lệ. Kiểm tra chiều cao, cân nặng, tuổi và creatinin.', field: 'vqt-height' };
+      return { p, r };
+    },
+    normalize() { if (typeof window.MPTNormalizeFormRows === 'function') window.MPTNormalizeFormRows(el('vk-protocol')); },
+    invalidate() {
+      this.last = null; el('vqt-results').classList.remove('vgn-show'); el('vqt-input-error').hidden = true;
+      el('vk-protocol').querySelectorAll('[aria-invalid]').forEach(node => node.removeAttribute('aria-invalid'));
+      this.preview(); this.renderReferences(null);
+    },
+    setMode(mode) {
+      if (mode !== 'intermittent' && mode !== 'continuous') return;
+      if (mode !== this.mode) el('vqt-loading-choice').value = '';
+      this.mode = mode;
+      ['intermittent', 'continuous'].forEach(name => { const b = el('vqt-mode-' + name); b.classList.toggle('active', name === mode); b.setAttribute('aria-pressed', String(name === mode)); });
+      el('vqt-target').innerHTML = mode === 'continuous'
+        ? '<strong>Đích Css 20–25 mg/L</strong>, tương đương AUC₂₄,ss 480–600 mg·h/L. Liều duy trì tra Bảng 6 với dung dịch <strong>4 mg/mL</strong>.'
+        : '<strong>Đích AUC₂₄,ss 400–600 mg·h/L</strong> khi MIC ≤1 mg/L hoặc chưa có MIC (giả định 1 mg/L); Ctrough,ss 10–20 mg/L. MIC >1 mg/L: bác sĩ/DSLS đánh giá đáp ứng và lựa chọn phác đồ.';
+      this.invalidate(); this.normalize();
+    },
+    toggleScrUnit(unit) {
+      if (!['mgdl', 'umol'].includes(unit) || unit === this.scrUnit) return;
+      const input = el('vqt-scr'), value = number(input.value), cached = this.convertedScr;
+      if (Number.isFinite(value)) {
+        const umol = cached && cached.value === input.value && cached.unit === this.scrUnit ? cached.umol : this.scrUnit === 'mgdl' ? value * 88.4 : value;
+        input.value = String(Number((unit === 'umol' ? umol : umol / 88.4).toPrecision(12)));
+        this.convertedScr = { umol, value: input.value, unit };
+      } else this.convertedScr = null;
+      this.scrUnit = unit;
+      el('vqt-scr-unit').querySelectorAll('button').forEach(b => { b.classList.toggle('active', b.dataset.unit === unit); b.setAttribute('aria-pressed', String(b.dataset.unit === unit)); });
+      this.invalidate(); this.normalize();
+    },
+    preview() {
+      const info = this.getPatient(), want = el('vqt-want-loading').checked, select = el('vqt-loading-choice');
+      if (info.error || !want) {
+        el('vqt-loading-choice-wrap').hidden = true;
+        el('vqt-loading-preview').textContent = want ? 'Nhập thông tin hợp lệ để tra bảng liều nạp.' : 'Không chọn liều nạp. Liều duy trì vẫn được tra theo bảng của cách truyền đang chọn.';
+        if (info.error) { select.innerHTML = '<option value="">Chọn liều theo đánh giá lâm sàng</option>'; select.dataset.bandKey = ''; }
+        return;
+      }
+      const load = loading(this.mode, info.p, info.r);
+      const bandKey = this.mode + ':' + load.table + ':' + load.index + ':' + load.options.join(',');
+      const previous = select.dataset.bandKey === bandKey ? number(select.value) : NaN;
+      select.dataset.bandKey = bandKey;
+      select.innerHTML = '<option value="">Chọn liều theo đánh giá lâm sàng</option>' + load.options.map(n => '<option value="' + n + '">' + f(n, 0) + ' mg</option>').join('');
+      if (load.options.includes(previous)) select.value = String(previous);
+      el('vqt-loading-choice-wrap').hidden = load.formula || !(load.options.length > 1 || load.consult);
+      el('vqt-loading-help').textContent = load.formula ? load.reason : 'Bảng 5 đưa ra khoảng liều ' + range(load.low, load.high) + ' mg; chọn một mức 250 mg trong khoảng theo đánh giá lâm sàng.';
+      el('vqt-loading-preview').textContent = load.options.length ? load.reason + ' Liều nạp tham khảo: ' + range(load.low, load.high) + ' mg.' : load.reason;
+    },
+    calculate() {
+      this.preview();
+      const info = this.getPatient();
+      el('vk-protocol').querySelectorAll('[aria-invalid]').forEach(node => node.removeAttribute('aria-invalid'));
+      if (info.error) {
+        this.last = null; el('vqt-results').classList.remove('vgn-show'); this.renderReferences(null);
+        el('vqt-input-error').textContent = info.error; el('vqt-input-error').hidden = false;
+        el(info.field).setAttribute('aria-invalid', 'true'); el(info.field).focus(); return;
+      }
+      el('vqt-input-error').hidden = true;
+      const { p, r } = info, wantLoading = el('vqt-want-loading').checked;
+      const load = loading(this.mode, p, r), maint = maintenance(this.mode, r.crcl, p.weightKg);
+      const chosen = number(el('vqt-loading-choice').value);
+      const loadingDose = !wantLoading ? null : load.formula ? load.options[0] || null : load.consult || load.options.length > 1 ? load.options.includes(chosen) ? chosen : null : load.options.length === 1 ? load.options[0] : null;
+      const data = { p, r, load, maint, wantLoading, loadingDose, mode: this.mode, unstable: el('vqt-renal-stability').value === 'unstable' };
+      this.last = data; this.renderResults(data); this.renderReferences(data);
+      el('vqt-results').classList.add('vgn-show'); this.normalize();
+    },
+    renderResults(d) {
+      const { p, r, load, maint, wantLoading, loadingDose, mode, unstable } = d;
+      const ready = maint.index >= 0;
+      const maintenanceTitle = !ready ? 'Cần xác nhận DSLS' : mode === 'continuous' ? f(maint.rateMlH, 0) + ' mL/giờ' : f(maint.doseMg, 0) + ' mg mỗi ' + maint.intervalH + ' giờ';
+      const loadTitle = !wantLoading ? 'Không chọn' : loadingDose ? f(loadingDose, 0) + ' mg' : load.options.length ? 'Cần chọn liều' : 'Cần xác nhận DSLS';
+      el('vqt-hero').innerHTML = [
+        ['CrCl ước tính (Cockcroft–Gault)', precise(r.crcl) + ' mL/phút', 'Tra bảng: ' + precise(maint.crclForTable) + ' mL/phút · ' + r.weightLabel],
+        ['Liều nạp', loadTitle, wantLoading ? load.table : 'Theo lựa chọn của người dùng'],
+        [mode === 'continuous' ? 'Tốc độ duy trì · 4 mg/mL' : 'Liều duy trì', maintenanceTitle, ready ? mode === 'continuous' ? f(maint.dailyMg, 0) + ' mg/24 giờ' : f(maint.dailyMg, 0) + ' mg/24 giờ (trung bình)' : 'Chưa có mức tương ứng trong bảng']
+      ].map(x => '<div class="vgn-hero-stat"><div class="vgn-hero-label">' + esc(x[0]) + '</div><div class="vgn-hero-value">' + esc(x[1]) + '</div><div class="vgn-hero-sub">' + esc(x[2]) + '</div></div>').join('');
+      el('vqt-rounding-summary').textContent = 'Giá trị tra bảng sau làm tròn xuống: cân nặng ' + precise(p.weightKg) + ' → ' + precise(maint.weightForTable) + ' kg; CrCl ' + precise(r.crcl) + ' → ' + precise(maint.crclForTable) + ' mL/phút. Công thức CrCl, BMI và liều theo mg/kg dùng số đo gốc.' + (mode === 'continuous' ? ' Bảng 6: đúng 100 dùng mức của dòng >100.' : ' Liều nạp truyền ngắt quãng dùng 25 mg/kg theo cách tính GAPP, làm tròn 250 mg gần nhất và tối đa 3000 mg.');
+      const alerts = [];
+      if (!ready) alerts.push([true, maint.reason]);
+      if (wantLoading && !loadingDose) alerts.push([true, load.options.length ? 'Chưa xác định liều nạp: chọn mức liều trong khoảng tham khảo ở bước 2' + (load.consult ? ' sau khi trao đổi với DSLS.' : ' theo đánh giá lâm sàng.') : load.reason]);
+      if (load.consult) alerts.push([false, load.reason]);
+      if (r.crcl > 130) alerts.push([false, mode === 'intermittent' ? 'CrCl >130 mL/phút: tăng thanh thải thận. Liên hệ DSLS theo ghi chú Bảng 2.' : 'CrCl >130 mL/phút: có tiêu chí cần theo dõi TDM theo mục VI của quy trình.']);
+      if (unstable) alerts.push([false, 'Chức năng thận không ổn định: CrCl ước tính cần diễn giải thận trọng; bác sĩ/DSLS xác nhận liều và theo dõi nồng độ thường xuyên hơn.']);
+      if (r.bmi >= 30 || p.weightKg > 1.3 * r.ibw) alerts.push([false, 'Có tiêu chí theo dõi TDM do BMI ≥30 kg/m² hoặc cân nặng thực >130% IBW.']);
+      el('vqt-alerts').innerHTML = alerts.map(a => '<div class="' + (a[0] ? 'vgn-alert-block' : 'vgn-warn-block') + '">' + esc(a[1]) + '</div>').join('');
+      let regimen = '';
+      if (wantLoading) regimen += loadingDose ? this.doseBlock('Liều nạp', f(loadingDose, 0) + ' mg', load.reason, this.infusionText(loadingDose, mode), 'vgn-loading') : this.doseBlock('Liều nạp', 'Chưa xác định', load.options.length ? 'Chọn liều ở bước 2 rồi bấm tính lại.' : load.reason, '', 'vgn-loading');
+      else regimen += this.doseBlock('Liều nạp', 'Không chọn sử dụng', 'Tùy chọn liều nạp đang tắt. Nếu chưa dùng liều nạp trước đó, bác sĩ/DSLS cần xác nhận cách bắt đầu chế độ liều.', '', 'vgn-loading');
+      if (!ready) regimen += this.doseBlock('Liều duy trì', 'Chưa xác định', maint.reason, '', 'vgn-maintenance');
+      else if (mode === 'intermittent') regimen += this.doseBlock('Liều duy trì · Bảng 2', maintenanceTitle, 'Theo CrCl tra bảng ' + precise(maint.crclForTable) + ' mL/phút (ước tính ban đầu ' + precise(r.crcl) + '). ' + (wantLoading && loadingDose ? 'Sau liều nạp, bắt đầu duy trì sau 1 khoảng đưa liều (' + maint.intervalH + ' giờ) theo quy trình.' : wantLoading ? 'Chưa xác định liều nạp; cần xác nhận thời điểm bắt đầu duy trì.' : 'Thời điểm bắt đầu theo y lệnh.'), this.infusionText(maint.doseMg, mode), 'vgn-maintenance');
+      else regimen += this.doseBlock('Liều duy trì · Bảng 6', maintenanceTitle, 'Dung dịch 4 mg/mL: ' + f(maint.hourlyMg, 0) + ' mg/giờ = ' + f(maint.dailyMg, 0) + ' mg/24 giờ; thể tích ' + f(maint.volumeDayMl, 0) + ' mL/24 giờ. ' + (wantLoading && loadingDose ? 'Bắt đầu truyền duy trì ngay sau khi kết thúc liều nạp.' : wantLoading ? 'Chưa xác định liều nạp; cần xác nhận thời điểm bắt đầu duy trì.' : 'Nếu đã dùng liều nạp, tiếp nối duy trì theo y lệnh; nếu chưa, xác nhận với bác sĩ/DSLS.'), 'Pha 1 g Vancomycin trong thể tích dung dịch 250 mL NaCl 0,9% hoặc glucose 5% (4 mg/mL). Bảo quản ở nhiệt độ phòng và dùng trong 24 giờ theo quy trình.', 'vgn-maintenance');
+      if (mode === 'intermittent') regimen += '<div class="vgn-method-note"><strong>Hướng dẫn truyền:</strong> hoàn nguyên lọ 500 mg với 10 mL hoặc lọ 1 g với 20 mL nước cất, sau đó pha loãng với NaCl 0,9%/glucose 5%. Truyền ngoại vi: nồng độ tối đa 5 mg/mL, tốt nhất 2,5–5 mg/mL. Trường hợp hạn chế dịch hoặc truyền trung tâm cần y lệnh riêng. Tốc độ không quá 10 mg/phút; thời gian tối thiểu hiển thị đã áp dụng giới hạn này thay cho khoảng ngắn hơn trong Bảng 3.</div>';
+      el('vqt-regimen-content').innerHTML = regimen;
+      el('vqt-monitoring-content').innerHTML = mode === 'continuous'
+        ? '<p><strong>Đích Css 20–25 mg/L</strong> (AUC₂₄,ss 480–600 mg·h/L).</p><p>Lấy 1 mẫu ở bất kỳ thời điểm nào sau khi truyền duy trì ít nhất 24 giờ, hoặc 24 giờ sau khi áp dụng tốc độ/liều mới. Mẫu này là nồng độ khi truyền liên tục, không nhập vào mô hình Bayesian truyền ngắt quãng của tab TDM hiện tại.</p>' + this.monitoringFooter(unstable)
+        : '<p><strong>Đích AUC₂₄,ss 400–600 mg·h/L</strong>; Ctrough,ss 10–20 mg/L. Không suy ra AUC chỉ từ bảng liều khởi đầu.</p><p>Khuyến khích 2 mẫu trong cùng một khoảng đưa liều: mẫu đỉnh sau kết thúc truyền liều đầu tiên/liều hiệu chỉnh 1–2 giờ; mẫu đáy trước liều kế tiếp dự kiến 30–60 phút. Khi hạn chế lấy mẫu có thể dùng 1 mẫu đáy.</p><p>Ghi chính xác thời điểm bắt đầu/kết thúc truyền và <strong>thời gian lấy mẫu thực</strong>. MIC >1 mg/L: cân nhắc tiếp tục TDM theo đích trên hoặc đổi phác đồ theo đáp ứng lâm sàng.</p>' + this.monitoringFooter(unstable);
+      const rows = [ ['Tuổi / giới', precise(p.ageYears) + ' tuổi / ' + (p.sex === 'female' ? 'Nữ (hệ số 0,85)' : 'Nam (hệ số 1)')], ['Chiều cao / cân nặng thực (ABW)', precise(p.heightCm) + ' cm / ' + precise(p.weightKg) + ' kg'], ['Cân nặng tra bảng (làm tròn xuống)', precise(maint.weightForTable) + ' kg'], ['BMI', f(r.bmi, 2) + ' kg/m²'], ['IBW', f(r.ibw, 3) + ' kg'], ['AdjBW = 0,6 × IBW + 0,4 × ABW', f(r.adjBW, 3) + ' kg'], ['Cân nặng dùng trong CrCl', f(r.crclWeight, 3) + ' kg · ' + r.weightLabel], ['Creatinin quy đổi', f(p.scrUmolL, 4) + ' µmol/L'], ['CrCl ước tính (chưa làm tròn)', precise(r.crcl) + ' mL/phút'], ['CrCl tra bảng (làm tròn xuống)', precise(maint.crclForTable) + ' mL/phút'] ];
+      if (mode === 'intermittent' && wantLoading && load.formula) rows.push(['Liều nạp tính từ cân nặng gốc', '25 × ' + precise(p.weightKg) + ' = ' + precise(load.doseBeforeRound) + ' mg'], ['Liều nạp sau giới hạn/làm tròn 250 mg', loadingDose ? f(loadingDose, 0) + ' mg (tối đa 3000 mg)' : 'Chưa xác định']);
+      el('vqt-calc-detail').innerHTML = '<div class="vqt-table-wrap"><table class="vgn-table"><thead><tr><th scope="col">Thông số</th><th scope="col">Giá trị</th></tr></thead><tbody>' + rows.map(row => '<tr><td>' + esc(row[0]) + '</td><td>' + esc(row[1]) + '</td></tr>').join('') + '</tbody></table></div>';
+      el('vqt-method-note').innerHTML = '<strong>Công thức đúng theo tài liệu:</strong><br>IBW = 50 (nam) hoặc 45,5 (nữ) + 0,9055 × (chiều cao −152).<br>CrCl = (140 −tuổi) × cân nặng dùng tính CrCl × (0,85 nếu nữ) / (SCr [µmol/L] × 0,815).<br>ABW &lt;IBW: dùng ABW; IBW ≤ABW ≤120% IBW: dùng IBW; ABW &gt;120% IBW: dùng AdjBW. 1 mg/dL creatinin = 88,4 µmol/L. Cần thận trọng ở người béo phì, suy kiệt, cơ bắp phát triển hoặc creatinin thay đổi.';
+    },
+    doseBlock(title, dose, note, preparation, cls) { return '<div class="vgn-dose-block ' + cls + '"><div class="vgn-dose-title">' + esc(title) + '</div><div class="vgn-dose-value">' + esc(dose) + '</div><div class="vgn-dose-note">' + esc(note) + '</div>' + (preparation ? '<div class="vgn-dose-note">' + esc(preparation) + '</div>' : '') + '</div>'; },
+    infusionText(dose, mode) {
+      const x = infusion(dose, mode); if (!x) return 'Chưa có hướng dẫn pha truyền tương ứng trong bảng; xác nhận DSLS.';
+      const volume = x.volumeLow === x.volumeHigh ? precise(x.volumeLow) : precise(x.volumeLow) + '–' + precise(x.volumeHigh);
+      return 'Pha trong thể tích dung dịch ' + volume + ' mL ' + (mode === 'continuous' ? '(4 mg/mL)' : '(NaCl 0,9% hoặc glucose 5%; truyền ngoại vi ≤5 mg/mL)') + '. Truyền ít nhất ' + f(x.minMinutes, 0) + ' phút để không vượt quá 10 mg/phút.';
+    },
+    monitoringFooter(unstable) { return '<p>Lấy 2 mL máu tĩnh mạch vào ống lithium heparin; chuyển mẫu trong 2 giờ, trả kết quả khoảng 2–3 giờ sau gửi mẫu.</p><p>' + (unstable ? 'Thận không ổn định: theo dõi 2–3 lần/tuần hoặc tới 1 lần/ngày tùy bệnh nhân.' : 'Khi đã đạt đích, đáp ứng tốt và thận ổn định: có thể theo dõi nồng độ 1 lần/tuần. Thận không ổn định: 2–3 lần/tuần hoặc tới 1 lần/ngày.') + ' Lấy lại mẫu sau điều chỉnh liều và theo dõi creatinin/đáp ứng lâm sàng theo quy trình.</p>'; },
+    table(key, title, headers, rows, matches, cellColumn) {
+      const selected = new Set((matches || []).filter(n => n >= 0)), active = selected.size > 0, expanded = this.expanded[key] === true;
+      return '<section><div class="vqt-table-tools"' + (active ? '' : ' hidden') + '><span>' + (expanded ? 'Đang xem toàn bảng · ' : '') + selected.size + ' dòng phù hợp</span><button type="button" class="bs" aria-controls="vqt-table-' + key + '" aria-expanded="' + expanded + '" onclick="VQT.toggleTable(\'' + key + '\')">' + (expanded ? 'Chỉ hiện kết quả phù hợp' : 'Xem toàn bảng') + '</button></div><div class="vqt-table-wrap"><table id="vqt-table-' + key + '" class="vgn-table' + (active && !expanded ? ' vqt-table-compact' : '') + '"><caption>' + esc(title) + '</caption><thead><tr>' + headers.map(h => '<th scope="col">' + esc(h) + '</th>').join('') + '</tr></thead><tbody>' + rows.map((row, i) => '<tr' + (selected.has(i) ? ' class="vqt-row-match"' : '') + '>' + row.map((text, j) => '<td' + (selected.has(i) && cellColumn === j ? ' class="vqt-cell-match"' : '') + '>' + esc(text) + (selected.has(i) && j === 0 ? '<span class="vqt-match-label">Phù hợp</span>' : '') + '</td>').join('') + '</tr>').join('') + '</tbody></table></div></section>';
+    },
+    renderReferences(d) {
+      const continuous = this.mode === 'continuous', loadRows = continuous ? loadingC : loadingI;
+      let html = this.table(continuous ? 'loading-c' : 'loading-i', continuous ? 'Bảng 5 · Liều nạp truyền liên tục' : 'Bảng 1 · Liều nạp truyền ngắt quãng', ['Cân nặng thực (kg)', 'Liều nạp (mg)'], loadRows.map(row => [row.label, range(row.low, row.high)]), d && d.wantLoading && d.load.index >= 0 ? [d.load.index] : []);
+      if (continuous) html += this.table('maintenance-c', 'Bảng 6 · Duy trì truyền liên tục, dung dịch 4 mg/mL', ['CrCl (mL/phút)', '36–55 kg (mL/giờ)', '56–119 kg (mL/giờ)', '≥120 kg (mL/giờ)'], maintenanceC.map(row => [row.label, ...row.rates]), d && d.maint.index >= 0 ? [d.maint.index] : [], d && d.maint.index >= 0 ? d.maint.weightIndex + 1 : -1) + '<p class="vqt-intro">Dòng ≥100 dùng trị số của dòng &gt;100 trong tài liệu, áp dụng cả đúng 100 mL/phút theo cách tra đang sử dụng. Cân nặng và CrCl trong bảng dùng giá trị đã làm tròn xuống số nguyên.</p>';
+      else html += this.table('maintenance-i', 'Bảng 2 · Liều duy trì truyền ngắt quãng', ['CrCl (mL/phút)', 'Liều duy trì'], maintenanceI.map(row => [row.label, f(row.doseMg, 0) + ' mg mỗi ' + row.intervalH + ' giờ']), d && d.maint.index >= 0 ? [d.maint.index] : []) + '<p class="vqt-intro">* CrCl &gt;130 mL/phút: liên hệ DSLS. Dòng &gt;90 áp dụng sau khi đã xét mức &gt;130.</p>';
+      if (!continuous) html = '<div class="vgn-method-note" style="margin-bottom:12px">Liều nạp truyền ngắt quãng đang tính bằng 25 mg/kg cân nặng gốc theo cách xử lý của tab GAPP, tối đa 3000 mg và làm tròn 250 mg gần nhất. Bảng 1 bên dưới giữ để đối chiếu tài liệu; không dùng để chọn liều nạp đang hiển thị.</div>' + html;
+      html += this.table('renal-weight', 'Cân nặng dùng trong công thức CrCl', ['Trường hợp', 'Cân nặng sử dụng'], [['ABW <IBW', 'ABW (cân nặng thực)'], ['IBW ≤ABW ≤120% IBW', 'IBW (cân nặng lý tưởng)'], ['ABW >120% IBW', 'AdjBW = 0,6 × IBW + 0,4 × ABW']], d ? [d.r.weightIndex] : []);
+      if (!continuous) {
+        const matches = []; if (d && d.loadingDose) matches.push(lookup(infusionRows, d.loadingDose)); if (d && d.maint.index >= 0) matches.push(lookup(infusionRows, d.maint.doseMg));
+        html += this.table('infusion-i', 'Bảng 3 · Hướng dẫn pha truyền trong tài liệu', ['Liều dùng', 'Thể tích truyền', 'Thời gian trong bảng', 'Tốc độ trong bảng'], infusionRows.map(row => [row.label, row.volume, row.time, row.drops]), matches);
+        html += '<div class="vgn-warn-block">Bảng 3 giữ nguyên các trị số của tài liệu để đối chiếu. Khi dùng phác đồ, ưu tiên giới hạn 10 mg/phút và nồng độ ngoại vi ≤5 mg/mL; xem thời gian/thể tích đã tính tại kết quả. Không quy đổi giọt/phút khi chưa biết hệ số giọt của dây truyền.</div>';
+      }
+      el('vqt-reference-tables').innerHTML = html;
+    },
+    toggleTable(key) { this.expanded[key] = !this.expanded[key]; this.renderReferences(this.last); },
+    reset() {
+      this.scrUnit = 'mgdl'; this.convertedScr = null; this.expanded = Object.create(null);
+      [['vqt-age', '60'], ['vqt-height', '165'], ['vqt-weight', '65'], ['vqt-scr', '0.9'], ['vqt-sex', 'male'], ['vqt-context', 'eligible'], ['vqt-renal-stability', 'stable']].forEach(x => { el(x[0]).value = x[1]; });
+      el('vqt-want-loading').checked = true; el('vqt-loading-choice').dataset.bandKey = ''; el('vqt-loading-choice').value = '';
+      el('vqt-scr-unit').querySelectorAll('button').forEach(b => { b.classList.toggle('active', b.dataset.unit === 'mgdl'); b.setAttribute('aria-pressed', String(b.dataset.unit === 'mgdl')); });
+      this.setMode('intermittent');
+    },
+    init() {
+      const root = el('vk-protocol'); if (!root) return;
+      root.querySelectorAll('input,select').forEach(node => {
+        const handler = () => { if (node.id === 'vqt-scr') this.convertedScr = null; this.invalidate(); this.normalize(); };
+        node.addEventListener(node.type === 'checkbox' || node.tagName === 'SELECT' ? 'change' : 'input', handler);
+      });
+      this.setMode('intermittent');
+    }
+  };
+  window.VQT = api;
+  if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => api.init()); else api.init();
+  }
+})();
+
 </script>
 </body>
 </html>
